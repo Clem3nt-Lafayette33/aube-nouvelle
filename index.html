@@ -24,6 +24,7 @@
     --rust:#B8541F;
     --green:#5B8A6B;
     --red:#A13F3F;
+    --neon-purple:#B026FF;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
   html,body{margin:0; padding:0;}
@@ -110,22 +111,21 @@
   }
   .task:active{transform:scale(0.995);}
   .task.done{
-    border-color:rgba(91,138,107,0.5);
-    background:linear-gradient(180deg, rgba(91,138,107,0.08), rgba(23,28,36,1) 60%);
+    border-color:var(--neon-purple);
+    background:linear-gradient(180deg, rgba(176,38,255,0.12), rgba(23,28,36,1) 60%);
+    box-shadow:0 0 14px rgba(176,38,255,0.25);
   }
   .check{
     width:22px; height:22px; min-width:22px;
     border-radius:6px;
     border:2px solid var(--text-faint);
     margin-top:2px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:13px;
     transition:all .15s ease;
   }
   .task.done .check{
-    background:var(--green);
-    border-color:var(--green);
-    color:#0B0E13;
+    background:var(--neon-purple);
+    border-color:var(--neon-purple);
+    box-shadow:0 0 10px rgba(176,38,255,0.6);
   }
   .task-body{flex:1;}
   .task-title{
@@ -152,6 +152,34 @@
   }
   .task-input:focus{border-color:var(--gold);}
   .task-input::placeholder{color:var(--text-faint);}
+
+  #task-french{cursor:default;}
+  .sub-checks{
+    display:flex;
+    gap:16px;
+    margin-top:10px;
+    flex-wrap:wrap;
+  }
+  .sub-check{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    cursor:pointer;
+    font-size:12.5px;
+    color:var(--text-dim);
+  }
+  .sub-check-box{
+    width:16px; height:16px; min-width:16px;
+    border-radius:4px;
+    border:2px solid var(--text-faint);
+    transition:all .15s ease;
+  }
+  .sub-check.done{color:var(--text);}
+  .sub-check.done .sub-check-box{
+    background:var(--neon-purple);
+    border-color:var(--neon-purple);
+    box-shadow:0 0 8px rgba(176,38,255,0.55);
+  }
 
   /* STREAK */
   .streak-row{
@@ -186,6 +214,12 @@
     border-radius:10px;
     padding:16px;
     margin-bottom:10px;
+    transition:all .15s ease;
+  }
+  .log-card.filled{
+    border-color:var(--neon-purple);
+    background:linear-gradient(180deg, rgba(176,38,255,0.12), rgba(23,28,36,1) 60%);
+    box-shadow:0 0 14px rgba(176,38,255,0.25);
   }
   .log-title{
     font-weight:600;
@@ -195,13 +229,13 @@
   }
   .log-row{display:flex; align-items:center; gap:12px;}
   .num-input{
-    width:70px;
+    width:120px;
     background:var(--bg-elev);
     border:1px solid var(--border);
     border-radius:6px;
     color:var(--text);
     font-family:'JetBrains Mono',monospace;
-    font-size:16px;
+    font-size:18px;
     padding:8px 10px;
     text-align:center;
     outline:none;
@@ -300,6 +334,137 @@
     color:var(--text-faint);
     font-style:italic;
   }
+
+  /* TABS */
+  .tabs{
+    display:flex;
+    gap:8px;
+    margin:18px 0 4px;
+    border-bottom:1px solid var(--border);
+  }
+  .tab-btn{
+    background:none;
+    border:none;
+    color:var(--text-faint);
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:10px 4px 12px;
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    margin-right:14px;
+  }
+  .tab-btn.active{
+    color:var(--gold);
+    border-bottom-color:var(--gold);
+  }
+  .view{display:none;}
+  .view.active{display:block;}
+
+  /* DASHBOARD */
+  .range-row{
+    display:flex;
+    gap:6px;
+    margin:16px 0;
+    flex-wrap:wrap;
+  }
+  .range-btn{
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    color:var(--text-dim);
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.04em;
+    padding:7px 12px;
+    border-radius:20px;
+    cursor:pointer;
+  }
+  .range-btn.active{
+    background:rgba(176,38,255,0.15);
+    border-color:var(--neon-purple);
+    color:#D9A3FF;
+  }
+  .chart-card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:16px;
+  }
+  .chart-empty{
+    color:var(--text-faint);
+    font-size:13px;
+    text-align:center;
+    padding:40px 10px;
+  }
+  .trend-row{
+    display:flex; gap:10px; margin-bottom:16px;
+  }
+  .trend-stat{
+    flex:1;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px;
+    text-align:center;
+  }
+  .trend-num{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:22px;
+    color:var(--neon-purple);
+  }
+  .trend-num.pos{color:#E8A77A;}
+  .trend-num.neg{color:#9ACBAA;}
+  .trend-label{
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-top:2px;
+  }
+
+  /* TIMER */
+  .timer-card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:28px 16px;
+    text-align:center;
+    margin-bottom:16px;
+  }
+  .timer-display{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:44px;
+    letter-spacing:0.03em;
+    color:var(--text);
+    margin-bottom:18px;
+  }
+  .timer-card.running .timer-display{
+    color:var(--neon-purple);
+    text-shadow:0 0 16px rgba(176,38,255,0.5);
+  }
+  .timer-btn{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:600;
+    font-size:18px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+    border:none;
+    border-radius:10px;
+    padding:14px 40px;
+    cursor:pointer;
+    background:var(--neon-purple);
+    color:#fff;
+    box-shadow:0 0 14px rgba(176,38,255,0.35);
+    transition:all .15s ease;
+  }
+  .timer-btn.running{
+    background:var(--rust);
+    box-shadow:0 0 14px rgba(184,84,31,0.35);
+  }
 </style>
 </head>
 <body>
@@ -313,32 +478,55 @@
   <div class="dawn-bar"><div class="dawn-bar-fill" id="dawnFill" style="width:0%"></div></div>
 
   <div class="wrap">
+    <div class="tabs">
+      <button class="tab-btn active" id="tabToday" onclick="switchTab('today')">Today</button>
+      <button class="tab-btn" id="tabDashboard" onclick="switchTab('dashboard')">Dashboard</button>
+      <button class="tab-btn" id="tabTiming" onclick="switchTab('timing')">Timing</button>
+    </div>
+  </div>
+
+  <div class="wrap view active" id="viewToday">
     <div class="streak-row">
       <div class="stat"><div class="stat-num" id="streakNum">0</div><div class="stat-label">Day Streak</div></div>
       <div class="stat"><div class="stat-num" id="weekRate">0%</div><div class="stat-label">7-Day Rate</div></div>
       <div class="stat"><div class="stat-num" id="phoneFreeStat">0/7</div><div class="stat-label">Phone-Free Nights</div></div>
     </div>
 
-    <div class="section-label">The Daily Four</div>
+    <div class="section-label">The Daily Three</div>
 
     <div class="task" id="task-move" data-key="move">
-      <div class="check">✓</div>
+      <div class="check"></div>
       <div class="task-body">
         <div class="task-title">Move</div>
         <div class="task-desc">Gym session or 20-minute walk minimum. No zero days.</div>
       </div>
     </div>
 
-    <div class="task" id="task-french" data-key="french">
-      <div class="check">✓</div>
+    <div class="task" id="task-french">
+      <div class="check"></div>
       <div class="task-body">
         <div class="task-title">French</div>
-        <div class="task-desc">Babbel 15min + Duolingo 10min minimum.</div>
+        <div class="task-desc">Babbel + Duolingo + one other action. Fills automatically once all three are checked — this box can't be selected directly.</div>
+        <div class="sub-checks">
+          <div class="sub-check" id="sub-babbel" onclick="toggleFrenchSub(event,'frenchBabbel')">
+            <div class="sub-check-box"></div>
+            <span>Babbel</span>
+          </div>
+          <div class="sub-check" id="sub-duo" onclick="toggleFrenchSub(event,'frenchDuo')">
+            <div class="sub-check-box"></div>
+            <span>Duolingo</span>
+          </div>
+          <div class="sub-check" id="sub-other">
+            <div class="sub-check-box"></div>
+            <span>Other Practice</span>
+          </div>
+        </div>
+        <input class="task-input" id="frenchOtherText" placeholder="What was the other practice? (required to check the box)" onclick="event.stopPropagation()">
       </div>
     </div>
 
     <div class="task" id="task-forward" data-key="forwardAction">
-      <div class="check">✓</div>
+      <div class="check"></div>
       <div class="task-body">
         <div class="task-title">One Forward Action</div>
         <div class="task-desc">Specific, named, executed same day.</div>
@@ -346,15 +534,7 @@
       </div>
     </div>
 
-    <div class="task" id="task-spend" data-key="spendIntentional">
-      <div class="check">✓</div>
-      <div class="task-body">
-        <div class="task-title">Spend Intentionally</div>
-        <div class="task-desc">"Does this serve the mission?" — before every purchase.</div>
-      </div>
-    </div>
-
-    <div class="section-label">Sleep &amp; Alcohol</div>
+    <div class="section-label">Daily Logs</div>
 
     <div class="log-card">
       <div class="log-title">Phone / AirPods at Night
@@ -376,11 +556,118 @@
       <input class="note-input" id="alcNote" placeholder="What / how much (optional)" style="display:none;">
     </div>
 
+    <div class="log-card">
+      <div class="log-title">Spend Check
+        <div class="toggle-pair">
+          <div class="pill" id="spendUnder" onclick="setSpendCheck(true)">Under $50</div>
+          <div class="pill" id="spendOver" onclick="setSpendCheck(false)">Over $50</div>
+        </div>
+      </div>
+      <div class="task-desc" style="margin-bottom:2px;">Did today's discretionary spending stay under $50?</div>
+    </div>
+
+    <div class="log-card" id="weightCard">
+      <div class="log-title">Morning Weight</div>
+      <div class="log-row">
+        <input type="number" class="num-input" id="weightInput" min="0" max="500" step="0.1" placeholder="0.0">
+        <span class="unit">lbs</span>
+        <span class="unit" id="weightKg"></span>
+      </div>
+    </div>
+
     <div class="section-label">Last 7 Days</div>
     <div class="week-grid" id="weekGrid"></div>
 
     <div class="section-label">Weekly Compiled</div>
     <div class="weekly-summary" id="weeklySummary"></div>
+
+    <button class="timer-btn" id="copyReportBtn" style="width:100%; margin-bottom:20px;" onclick="copyWeeklyReport()">Copy Weekly Report</button>
+  </div>
+
+  <div class="wrap view" id="viewDashboard">
+    <div class="section-label">Weight Over Time</div>
+
+    <div class="range-row" id="rangeRow">
+      <button class="range-btn" data-range="7">Week</button>
+      <button class="range-btn" data-range="30">Month</button>
+      <button class="range-btn" data-range="90">3 Months</button>
+      <button class="range-btn" data-range="180">6 Months</button>
+      <button class="range-btn" data-range="365">12 Months</button>
+    </div>
+
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="trendChange">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="trendPerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="trendPoints">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+
+    <div class="chart-card">
+      <div id="chartArea"></div>
+    </div>
+
+    <div class="section-label">French Study Time</div>
+
+    <div class="range-row" id="frenchRangeRow">
+      <button class="range-btn" data-range="7">Week</button>
+      <button class="range-btn" data-range="30">Month</button>
+      <button class="range-btn" data-range="90">3 Months</button>
+      <button class="range-btn" data-range="180">6 Months</button>
+      <button class="range-btn" data-range="365">12 Months</button>
+    </div>
+
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="frenchTotal">—</div><div class="trend-label">Total Time</div></div>
+      <div class="trend-stat"><div class="trend-num" id="frenchAvg">—</div><div class="trend-label">Avg / Day</div></div>
+      <div class="trend-stat"><div class="trend-num" id="frenchDaysLogged">—</div><div class="trend-label">Days Logged</div></div>
+    </div>
+
+    <div class="chart-card">
+      <div id="frenchChartArea"></div>
+    </div>
+
+    <div class="section-label">Time Spent Gaming</div>
+
+    <div class="range-row" id="timingRangeRow">
+      <button class="range-btn" data-range="7">Week</button>
+      <button class="range-btn" data-range="30">Month</button>
+      <button class="range-btn" data-range="90">3 Months</button>
+      <button class="range-btn" data-range="180">6 Months</button>
+      <button class="range-btn" data-range="365">12 Months</button>
+    </div>
+
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="gamingTotal">—</div><div class="trend-label">Total Time</div></div>
+      <div class="trend-stat"><div class="trend-num" id="gamingAvg">—</div><div class="trend-label">Avg / Day</div></div>
+      <div class="trend-stat"><div class="trend-num" id="gamingDaysLogged">—</div><div class="trend-label">Days Logged</div></div>
+    </div>
+
+    <div class="chart-card">
+      <div id="gamingChartArea"></div>
+    </div>
+
+    <div class="section-label">Backup &amp; Restore</div>
+    <div class="log-card">
+      <div class="task-desc" style="margin-bottom:12px;">Your data lives only on this device. Download a backup regularly — pair it with your weekly check-in.</div>
+      <button class="timer-btn" style="width:100%; margin-bottom:10px;" onclick="downloadBackup()">Download Backup</button>
+      <input type="file" id="restoreFileInput" accept="application/json" style="display:none;" onchange="restoreBackup(event)">
+      <button class="timer-btn" style="width:100%; background:var(--bg-elev); border:1px solid var(--border); box-shadow:none; color:var(--text-dim);" onclick="document.getElementById('restoreFileInput').click()">Restore from Backup</button>
+    </div>
+  </div>
+
+  <div class="wrap view" id="viewTiming">
+    <div class="section-label">French</div>
+
+    <div class="timer-card" id="frenchTimerCard">
+      <div class="timer-display" id="frenchTimerDisplay">00:00:00</div>
+      <button class="timer-btn" id="frenchTimerBtn" onclick="toggleFrenchTimer()">Start</button>
+    </div>
+
+    <div class="section-label">Gaming</div>
+
+    <div class="timer-card" id="gamingTimerCard">
+      <div class="timer-display" id="gamingDisplay">00:00:00</div>
+      <button class="timer-btn" id="gamingBtn" onclick="toggleGamingTimer()">Start</button>
+    </div>
   </div>
 
   <footer>Il n'y a jamais de moment parfait. Il y a seulement maintenant.</footer>
@@ -411,13 +698,23 @@ const TODAY = todayStr();
 if(!history[TODAY]){
   history[TODAY] = {
     move:false, french:false, forwardAction:false, forwardActionText:'',
-    spendIntentional:false,
+    frenchBabbel:false, frenchDuo:false, frenchOther:false, frenchOtherText:'',
     phoneSleep:null,
-    alcohol:null, alcoholNote:''
+    alcohol:null, alcoholNote:'',
+    spendUnderLimit:null,
+    weight:null,
+    gamingAccumulated:0, gamingRunning:false, gamingStartedAt:null,
+    frenchTimerAccumulated:0, frenchTimerRunning:false, frenchTimerStartedAt:null
   };
   saveHistory(history);
 }
 let today = history[TODAY];
+if(today.gamingAccumulated === undefined) today.gamingAccumulated = 0;
+if(today.gamingRunning === undefined) today.gamingRunning = false;
+if(today.gamingStartedAt === undefined) today.gamingStartedAt = null;
+if(today.frenchTimerAccumulated === undefined) today.frenchTimerAccumulated = 0;
+if(today.frenchTimerRunning === undefined) today.frenchTimerRunning = false;
+if(today.frenchTimerStartedAt === undefined) today.frenchTimerStartedAt = null;
 
 function persist(){
   history[TODAY] = today;
@@ -432,15 +729,16 @@ function renderHeader(){
   const dayNum = Math.floor((now - START_DATE) / 86400000) + 1;
   document.getElementById('dayCounter').textContent = `Day ${dayNum} of 100`;
 
-  const keys = ['move','french','forwardAction','spendIntentional'];
+  const keys = ['move','french','forwardAction'];
   const done = keys.filter(k => today[k]).length;
-  document.getElementById('dawnFill').style.width = `${(done/4)*100}%`;
+  document.getElementById('dawnFill').style.width = `${(done/3)*100}%`;
 }
 
 // --- Task toggles ---
 document.querySelectorAll('.task').forEach(el=>{
   el.addEventListener('click', ()=>{
     const key = el.dataset.key;
+    if(!key) return;
     today[key] = !today[key];
     persist();
   });
@@ -459,10 +757,39 @@ function setAlcohol(val){
   today.alcohol = val;
   persist();
 }
+function setSpendCheck(val){
+  today.spendUnderLimit = val;
+  persist();
+}
 function setPhoneSleep(val){
   today.phoneSleep = val;
   persist();
 }
+function toggleFrenchSub(e, key){
+  e.stopPropagation();
+  today[key] = !today[key];
+  today.french = today.frenchBabbel && today.frenchDuo && today.frenchOther;
+  persist();
+}
+function refreshFrenchVisuals(){
+  document.getElementById('sub-babbel').classList.toggle('done', !!today.frenchBabbel);
+  document.getElementById('sub-duo').classList.toggle('done', !!today.frenchDuo);
+  document.getElementById('sub-other').classList.toggle('done', !!today.frenchOther);
+  document.getElementById('task-french').classList.toggle('done', !!today.french);
+}
+document.getElementById('frenchOtherText').addEventListener('input', (e)=>{
+  today.frenchOtherText = e.target.value;
+  today.frenchOther = e.target.value.trim().length > 0;
+  today.french = today.frenchBabbel && today.frenchDuo && today.frenchOther;
+  history[TODAY] = today;
+  saveHistory(history);
+  refreshFrenchVisuals();
+  renderHeader();
+});
+document.getElementById('weightInput').addEventListener('change', (e)=>{
+  today.weight = e.target.value === '' ? null : parseFloat(e.target.value);
+  persist();
+});
 
 // --- Streak calc ---
 function calcStreak(){
@@ -472,7 +799,7 @@ function calcStreak(){
     const key = dateStr(d);
     const entry = history[key];
     if(!entry) break;
-    const complete = entry.move && entry.french && entry.forwardAction && entry.spendIntentional;
+    const complete = entry.move && entry.french && entry.forwardAction;
     if(!complete) break;
     streak++;
     d.setDate(d.getDate()-1);
@@ -495,41 +822,52 @@ function render(){
   renderHeader();
 
   // task states
-  ['move','french','forwardAction','spendIntentional'].forEach(k=>{
-    const el = document.getElementById('task-'+(k==='forwardAction'?'forward':(k==='spendIntentional'?'spend':k)));
+  ['move','french','forwardAction'].forEach(k=>{
+    const el = document.getElementById('task-'+(k==='forwardAction'?'forward':k));
     el.classList.toggle('done', !!today[k]);
   });
   document.getElementById('forwardActionText').value = today.forwardActionText || '';
+  document.getElementById('frenchOtherText').value = today.frenchOtherText || '';
+  refreshFrenchVisuals();
   document.getElementById('alcNote').style.display = today.alcohol === true ? 'block' : 'none';
   document.getElementById('alcNote').value = today.alcoholNote || '';
   document.getElementById('alcYes').classList.toggle('active-yes', today.alcohol === true);
   document.getElementById('alcNo').classList.toggle('active-no', today.alcohol === false);
+  document.getElementById('spendUnder').classList.toggle('active-no', today.spendUnderLimit === true);
+  document.getElementById('spendOver').classList.toggle('active-yes', today.spendUnderLimit === false);
   document.getElementById('phoneYes').classList.toggle('active-yes', today.phoneSleep === true);
   document.getElementById('phoneNo').classList.toggle('active-no', today.phoneSleep === false);
+  document.getElementById('weightInput').value = today.weight ?? '';
+  document.getElementById('weightCard').classList.toggle('filled', typeof today.weight === 'number');
+  document.getElementById('weightKg').textContent = typeof today.weight === 'number'
+    ? `(${(today.weight * 0.453592).toFixed(1)} kg)`
+    : '';
 
   // streak
   document.getElementById('streakNum').textContent = calcStreak();
 
   // week grid + summary
   const days = last7Dates();
-  let fullCount = 0, phoneFreeDays = 0, phoneDaysLogged = 0, alcDays = 0, moveDays=0, frenchDays=0;
+  let fullCount = 0, phoneFreeDays = 0, phoneDaysLogged = 0, alcDays = 0, moveDays=0, frenchDays=0, spendUnderDays=0, spendDaysLogged=0;
   const grid = document.getElementById('weekGrid');
   grid.innerHTML = '';
   days.forEach(d=>{
     const key = dateStr(d);
     const entry = history[key] || {};
-    const doneCount = ['move','french','forwardAction','spendIntentional'].filter(k=>entry[k]).length;
-    if(doneCount===4) fullCount++;
+    const doneCount = ['move','french','forwardAction'].filter(k=>entry[k]).length;
+    if(doneCount===3) fullCount++;
     if(entry.move) moveDays++;
     if(entry.french) frenchDays++;
     if(entry.phoneSleep === false){ phoneFreeDays++; phoneDaysLogged++; }
     else if(entry.phoneSleep === true){ phoneDaysLogged++; }
     if(entry.alcohol === true) alcDays++;
+    if(entry.spendUnderLimit === true){ spendUnderDays++; spendDaysLogged++; }
+    else if(entry.spendUnderLimit === false){ spendDaysLogged++; }
 
     const isToday = key === TODAY;
     const col = document.createElement('div');
     col.className = 'day-col' + (isToday ? ' today' : '');
-    const dotClass = doneCount===4 ? 'full' : (doneCount>0 ? 'partial' : '');
+    const dotClass = doneCount===3 ? 'full' : (doneCount>0 ? 'partial' : '');
     const phoneMark = entry.phoneSleep === true ? '📱' : (entry.phoneSleep === false ? '📵' : '—');
     col.innerHTML = `
       <div class="day-label">${d.toLocaleDateString('en-US',{weekday:'narrow'})}</div>
@@ -539,19 +877,511 @@ function render(){
     grid.appendChild(col);
   });
 
-  document.getElementById('phoneFreeStat').textContent = `${phoneFreeDays}/${phoneDaysLogged||7}`;
+  document.getElementById('phoneFreeStat').textContent = `${phoneFreeDays}/7`;
   document.getElementById('weekRate').textContent = Math.round((fullCount/7)*100) + '%';
 
   document.getElementById('weeklySummary').innerHTML = `
-    <div class="ws-row"><span>Daily Four complete</span><span class="ws-val">${fullCount}/7</span></div>
+    <div class="ws-row"><span>Daily Three complete</span><span class="ws-val">${fullCount}/7</span></div>
     <div class="ws-row"><span>Move days</span><span class="ws-val">${moveDays}/7</span></div>
     <div class="ws-row"><span>French days</span><span class="ws-val">${frenchDays}/7</span></div>
-    <div class="ws-row"><span>Phone-free nights</span><span class="ws-val">${phoneFreeDays}/${phoneDaysLogged||7}</span></div>
+    <div class="ws-row"><span>Phone-free nights</span><span class="ws-val">${phoneFreeDays}/7</span></div>
     <div class="ws-row"><span>Alcohol days</span><span class="ws-val">${alcDays}/7</span></div>
+    <div class="ws-row"><span>Under $50 days</span><span class="ws-val">${spendUnderDays}/7</span></div>
   `;
 }
 
 render();
+
+// --- TABS ---
+function switchTab(tab){
+  document.getElementById('viewToday').classList.toggle('active', tab==='today');
+  document.getElementById('viewDashboard').classList.toggle('active', tab==='dashboard');
+  document.getElementById('viewTiming').classList.toggle('active', tab==='timing');
+  document.getElementById('tabToday').classList.toggle('active', tab==='today');
+  document.getElementById('tabDashboard').classList.toggle('active', tab==='dashboard');
+  document.getElementById('tabTiming').classList.toggle('active', tab==='timing');
+  if(tab==='dashboard'){ renderDashboard(); renderGamingDashboard(); renderFrenchDashboard(); }
+}
+
+// --- DASHBOARD ---
+let currentRange = 90;
+document.querySelectorAll('#rangeRow .range-btn').forEach(btn=>{
+  if(parseInt(btn.dataset.range) === currentRange) btn.classList.add('active');
+  btn.addEventListener('click', ()=>{
+    currentRange = parseInt(btn.dataset.range);
+    document.querySelectorAll('#rangeRow .range-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderDashboard();
+  });
+});
+
+function renderDashboard(){
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - currentRange);
+
+  const points = Object.keys(history)
+    .filter(k => typeof history[k].weight === 'number' && new Date(k+'T00:00:00') >= cutoff)
+    .sort()
+    .map(k => ({ date: new Date(k+'T00:00:00'), weight: history[k].weight }));
+
+  const chartArea = document.getElementById('chartArea');
+
+  if(points.length === 0){
+    chartArea.innerHTML = '<div class="chart-empty">No weight entries in this range yet. Log a morning weight on the Today tab.</div>';
+    document.getElementById('trendChange').textContent = '—';
+    document.getElementById('trendPerWeek').textContent = '—';
+    document.getElementById('trendPoints').textContent = '0';
+    return;
+  }
+
+  if(points.length === 1){
+    chartArea.innerHTML = `<div class="chart-empty">One entry so far: ${points[0].weight} lbs on ${points[0].date.toLocaleDateString('en-US',{month:'short',day:'numeric'})}. Trend appears once there are two or more.</div>`;
+    document.getElementById('trendChange').textContent = '—';
+    document.getElementById('trendPerWeek').textContent = '—';
+    document.getElementById('trendPoints').textContent = '1';
+    return;
+  }
+
+  // --- trend calc ---
+  const first = points[0], last = points[points.length-1];
+  const totalChange = last.weight - first.weight;
+  const weeksSpan = Math.max((last.date - first.date) / (1000*60*60*24*7), 1/7);
+  const perWeek = totalChange / weeksSpan;
+
+  const changeEl = document.getElementById('trendChange');
+  changeEl.textContent = `${totalChange > 0 ? '+' : ''}${totalChange.toFixed(1)} lbs`;
+  changeEl.className = 'trend-num ' + (totalChange > 0 ? 'pos' : (totalChange < 0 ? 'neg' : ''));
+
+  const perWeekEl = document.getElementById('trendPerWeek');
+  perWeekEl.textContent = `${perWeek > 0 ? '+' : ''}${perWeek.toFixed(2)}`;
+  perWeekEl.className = 'trend-num ' + (perWeek > 0 ? 'pos' : (perWeek < 0 ? 'neg' : ''));
+
+  document.getElementById('trendPoints').textContent = points.length;
+
+  // --- SVG chart ---
+  const W = 600, H = 220, padL = 42, padR = 14, padT = 16, padB = 26;
+  const weights = points.map(p=>p.weight);
+  let minW = Math.min(...weights), maxW = Math.max(...weights);
+  if(minW === maxW){ minW -= 2; maxW += 2; }
+  const pad = (maxW - minW) * 0.1;
+  minW -= pad; maxW += pad;
+
+  const xFor = (i) => padL + (i/(points.length-1)) * (W - padL - padR);
+  const yFor = (w) => padT + (1 - (w - minW)/(maxW - minW)) * (H - padT - padB);
+
+  const linePoints = points.map((p,i)=>`${xFor(i)},${yFor(p.weight)}`).join(' ');
+  const dots = points.map((p,i)=>`<circle cx="${xFor(i)}" cy="${yFor(p.weight)}" r="3.5" fill="#B026FF" />`).join('');
+
+  const gridLines = [0,0.5,1].map(t=>{
+    const y = padT + t*(H-padT-padB);
+    const val = (maxW - t*(maxW-minW)).toFixed(0);
+    return `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#262C36" stroke-width="1"/>
+            <text x="4" y="${y+4}" fill="#8A8F99" font-size="10" font-family="JetBrains Mono, monospace">${val}</text>`;
+  }).join('');
+
+  const firstLabel = first.date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const lastLabel = last.date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+
+  chartArea.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto;">
+      ${gridLines}
+      <polyline points="${linePoints}" fill="none" stroke="#B026FF" stroke-width="2.5" />
+      ${dots}
+      <text x="${padL}" y="${H-6}" fill="#8A8F99" font-size="10" font-family="JetBrains Mono, monospace">${firstLabel}</text>
+      <text x="${W-padR}" y="${H-6}" fill="#8A8F99" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">${lastLabel}</text>
+    </svg>
+  `;
+}
+
+// --- GAMING TIMER ---
+let gamingInterval = null;
+
+function fmtHMS(totalSeconds){
+  const s = Math.floor(totalSeconds);
+  const h = String(Math.floor(s/3600)).padStart(2,'0');
+  const m = String(Math.floor((s%3600)/60)).padStart(2,'0');
+  const sec = String(s%60).padStart(2,'0');
+  return `${h}:${m}:${sec}`;
+}
+
+function currentGamingSeconds(){
+  let total = today.gamingAccumulated || 0;
+  if(today.gamingRunning && today.gamingStartedAt){
+    total += (Date.now() - today.gamingStartedAt) / 1000;
+  }
+  return total;
+}
+
+function updateGamingDisplay(){
+  document.getElementById('gamingDisplay').textContent = fmtHMS(currentGamingSeconds());
+}
+
+function toggleGamingTimer(){
+  if(today.gamingRunning){
+    // stop
+    today.gamingAccumulated = currentGamingSeconds();
+    today.gamingRunning = false;
+    today.gamingStartedAt = null;
+    if(gamingInterval){ clearInterval(gamingInterval); gamingInterval = null; }
+  } else {
+    // start
+    today.gamingStartedAt = Date.now();
+    today.gamingRunning = true;
+    gamingInterval = setInterval(updateGamingDisplay, 1000);
+  }
+  history[TODAY] = today;
+  saveHistory(history);
+  renderGamingButton();
+  updateGamingDisplay();
+}
+
+function renderGamingButton(){
+  const btn = document.getElementById('gamingBtn');
+  const card = document.getElementById('gamingTimerCard');
+  btn.textContent = today.gamingRunning ? 'Stop' : 'Start';
+  btn.classList.toggle('running', today.gamingRunning);
+  card.classList.toggle('running', today.gamingRunning);
+}
+
+// resume timer visuals + interval if it was left running (e.g. page refresh)
+renderGamingButton();
+updateGamingDisplay();
+if(today.gamingRunning){
+  gamingInterval = setInterval(updateGamingDisplay, 1000);
+}
+
+// --- FRENCH TIMER ---
+let frenchTimerInterval = null;
+
+function currentFrenchTimerSeconds(){
+  let total = today.frenchTimerAccumulated || 0;
+  if(today.frenchTimerRunning && today.frenchTimerStartedAt){
+    total += (Date.now() - today.frenchTimerStartedAt) / 1000;
+  }
+  return total;
+}
+
+function updateFrenchTimerDisplay(){
+  document.getElementById('frenchTimerDisplay').textContent = fmtHMS(currentFrenchTimerSeconds());
+}
+
+function toggleFrenchTimer(){
+  if(today.frenchTimerRunning){
+    // stop
+    today.frenchTimerAccumulated = currentFrenchTimerSeconds();
+    today.frenchTimerRunning = false;
+    today.frenchTimerStartedAt = null;
+    if(frenchTimerInterval){ clearInterval(frenchTimerInterval); frenchTimerInterval = null; }
+  } else {
+    // start
+    today.frenchTimerStartedAt = Date.now();
+    today.frenchTimerRunning = true;
+    frenchTimerInterval = setInterval(updateFrenchTimerDisplay, 1000);
+  }
+  history[TODAY] = today;
+  saveHistory(history);
+  renderFrenchTimerButton();
+  updateFrenchTimerDisplay();
+}
+
+function renderFrenchTimerButton(){
+  const btn = document.getElementById('frenchTimerBtn');
+  const card = document.getElementById('frenchTimerCard');
+  btn.textContent = today.frenchTimerRunning ? 'Stop' : 'Start';
+  btn.classList.toggle('running', today.frenchTimerRunning);
+  card.classList.toggle('running', today.frenchTimerRunning);
+}
+
+// resume timer visuals + interval if it was left running (e.g. page refresh)
+renderFrenchTimerButton();
+updateFrenchTimerDisplay();
+if(today.frenchTimerRunning){
+  frenchTimerInterval = setInterval(updateFrenchTimerDisplay, 1000);
+}
+
+// --- TIMING DASHBOARD ---
+let currentTimingRange = 90;
+document.querySelectorAll('#timingRangeRow .range-btn').forEach(btn=>{
+  if(parseInt(btn.dataset.range) === currentTimingRange) btn.classList.add('active');
+  btn.addEventListener('click', ()=>{
+    currentTimingRange = parseInt(btn.dataset.range);
+    document.querySelectorAll('#timingRangeRow .range-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGamingDashboard();
+  });
+});
+
+function renderGamingDashboard(){
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - currentTimingRange);
+
+  const points = Object.keys(history)
+    .filter(k => new Date(k+'T00:00:00') >= cutoff)
+    .sort()
+    .map(k => {
+      const entry = history[k];
+      let seconds = entry.gamingAccumulated || 0;
+      // include live elapsed time for today if the timer is currently running
+      if(k === TODAY && entry.gamingRunning && entry.gamingStartedAt){
+        seconds += (Date.now() - entry.gamingStartedAt) / 1000;
+      }
+      return { date: new Date(k+'T00:00:00'), seconds };
+    })
+    .filter(p => p.seconds > 0);
+
+  const chartArea = document.getElementById('gamingChartArea');
+
+  if(points.length === 0){
+    chartArea.innerHTML = '<div class="chart-empty">No gaming time logged in this range yet. Start the timer on this tab to begin tracking.</div>';
+    document.getElementById('gamingTotal').textContent = '—';
+    document.getElementById('gamingAvg').textContent = '—';
+    document.getElementById('gamingDaysLogged').textContent = '0';
+    return;
+  }
+
+  const totalSeconds = points.reduce((sum,p)=>sum+p.seconds, 0);
+  const avgSeconds = totalSeconds / points.length;
+
+  document.getElementById('gamingTotal').textContent = fmtHoursMin(totalSeconds);
+  document.getElementById('gamingAvg').textContent = fmtHoursMin(avgSeconds);
+  document.getElementById('gamingDaysLogged').textContent = points.length;
+
+  // --- bar chart ---
+  const W = 600, H = 220, padL = 42, padR = 14, padT = 16, padB = 26;
+  const maxSeconds = Math.max(...points.map(p=>p.seconds));
+  const barW = Math.max((W - padL - padR) / points.length - 4, 3);
+
+  const yFor = (s) => padT + (1 - s/maxSeconds) * (H - padT - padB);
+
+  const bars = points.map((p,i)=>{
+    const x = padL + i * ((W - padL - padR) / points.length);
+    const y = yFor(p.seconds);
+    const h = (H - padB) - y;
+    return `<rect x="${x}" y="${y}" width="${barW}" height="${h}" rx="2" fill="#B026FF" opacity="0.85" />`;
+  }).join('');
+
+  const gridLines = [0,0.5,1].map(t=>{
+    const y = padT + t*(H-padT-padB);
+    const val = fmtHoursMin(maxSeconds - t*maxSeconds);
+    return `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#262C36" stroke-width="1"/>
+            <text x="4" y="${y+4}" fill="#8A8F99" font-size="9" font-family="JetBrains Mono, monospace">${val}</text>`;
+  }).join('');
+
+  const firstLabel = points[0].date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const lastLabel = points[points.length-1].date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+
+  chartArea.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto;">
+      ${gridLines}
+      ${bars}
+      <text x="${padL}" y="${H-6}" fill="#8A8F99" font-size="10" font-family="JetBrains Mono, monospace">${firstLabel}</text>
+      <text x="${W-padR}" y="${H-6}" fill="#8A8F99" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">${lastLabel}</text>
+    </svg>
+  `;
+}
+
+function fmtHoursMin(totalSeconds){
+  const totalMin = Math.round(totalSeconds/60);
+  const h = Math.floor(totalMin/60);
+  const m = totalMin%60;
+  return h > 0 ? `${h}h ${m}m` : `${m}m`;
+}
+
+// --- WEEKLY REPORT EXPORT ---
+function copyWeeklyReport(){
+  const days = last7Dates();
+  const entries = days.map(d => ({ date: d, key: dateStr(d), entry: history[dateStr(d)] || {} }));
+
+  let moveDays=0, frenchDays=0, forwardDays=0, fullCount=0;
+  let phoneFreeDays=0, phoneLogged=0, alcDays=0, spendUnderDays=0, spendLogged=0;
+  let gamingSeconds=0, frenchSeconds=0;
+  const weights = [];
+
+  entries.forEach(({key, entry})=>{
+    if(entry.move) moveDays++;
+    if(entry.french) frenchDays++;
+    if(entry.forwardAction) forwardDays++;
+    if(entry.move && entry.french && entry.forwardAction) fullCount++;
+    if(entry.phoneSleep === false){ phoneFreeDays++; phoneLogged++; }
+    else if(entry.phoneSleep === true){ phoneLogged++; }
+    if(entry.alcohol === true) alcDays++;
+    if(entry.spendUnderLimit === true){ spendUnderDays++; spendLogged++; }
+    else if(entry.spendUnderLimit === false){ spendLogged++; }
+    if(typeof entry.weight === 'number') weights.push({key, weight: entry.weight});
+    let gs = entry.gamingAccumulated || 0;
+    if(key === TODAY && entry.gamingRunning && entry.gamingStartedAt) gs += (Date.now()-entry.gamingStartedAt)/1000;
+    gamingSeconds += gs;
+    let fs = entry.frenchTimerAccumulated || 0;
+    if(key === TODAY && entry.frenchTimerRunning && entry.frenchTimerStartedAt) fs += (Date.now()-entry.frenchTimerStartedAt)/1000;
+    frenchSeconds += fs;
+  });
+
+  const startLabel = entries[0].date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const endLabel = entries[entries.length-1].date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const streak = calcStreak();
+
+  let weightLine = 'No weight logged this week.';
+  if(weights.length >= 2){
+    const change = weights[weights.length-1].weight - weights[0].weight;
+    weightLine = `${weights[0].weight} lbs -> ${weights[weights.length-1].weight} lbs (${change>0?'+':''}${change.toFixed(1)} lbs), ${weights.length} entries logged`;
+  } else if(weights.length === 1){
+    weightLine = `${weights[0].weight} lbs, 1 entry logged`;
+  }
+
+  const report = `L'AUBE NOUVELLE — WEEKLY CHECK-IN
+Week of ${startLabel} to ${endLabel}
+Day streak: ${streak}
+
+DAILY THREE
+Move: ${moveDays}/7
+French: ${frenchDays}/7
+Forward Action: ${forwardDays}/7
+All three complete: ${fullCount}/7
+
+HABITS
+Phone-free nights: ${phoneFreeDays}/7
+Alcohol days: ${alcDays}/7
+Under $50 spend days: ${spendUnderDays}/7
+
+WEIGHT
+${weightLine}
+
+TIME LOGGED
+French study: ${fmtHoursMin(frenchSeconds)} total (avg ${fmtHoursMin(frenchSeconds/7)}/day)
+Gaming: ${fmtHoursMin(gamingSeconds)} total (avg ${fmtHoursMin(gamingSeconds/7)}/day)`;
+
+  const btn = document.getElementById('copyReportBtn');
+  const showCopied = () => {
+    const original = btn.textContent;
+    btn.textContent = 'Copied — paste into Claude';
+    setTimeout(()=>{ btn.textContent = original; }, 2500);
+  };
+
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(report).then(showCopied).catch(()=>{
+      window.prompt('Copy this manually:', report);
+    });
+  } else {
+    window.prompt('Copy this manually:', report);
+  }
+}
+
+// --- BACKUP & RESTORE ---
+function downloadBackup(){
+  const raw = localStorage.getItem(STORE_KEY) || '{}';
+  const blob = new Blob([raw], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = dateStr(new Date());
+  a.href = url;
+  a.download = `aube-nouvelle-backup-${stamp}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function restoreBackup(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = (e)=>{
+    try{
+      const parsed = JSON.parse(e.target.result);
+      if(typeof parsed !== 'object' || parsed === null) throw new Error('Invalid backup file');
+      const confirmed = window.confirm('This will replace all current data on this device with the backup file. This cannot be undone. Continue?');
+      if(!confirmed) return;
+      localStorage.setItem(STORE_KEY, JSON.stringify(parsed));
+      window.alert('Backup restored. Reloading now.');
+      location.reload();
+    } catch(err){
+      window.alert('That file could not be read as a valid backup. Nothing was changed.');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// --- FRENCH TIME DASHBOARD ---
+let currentFrenchRange = 90;
+document.querySelectorAll('#frenchRangeRow .range-btn').forEach(btn=>{
+  if(parseInt(btn.dataset.range) === currentFrenchRange) btn.classList.add('active');
+  btn.addEventListener('click', ()=>{
+    currentFrenchRange = parseInt(btn.dataset.range);
+    document.querySelectorAll('#frenchRangeRow .range-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderFrenchDashboard();
+  });
+});
+
+function renderFrenchDashboard(){
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - currentFrenchRange);
+
+  const points = Object.keys(history)
+    .filter(k => new Date(k+'T00:00:00') >= cutoff)
+    .sort()
+    .map(k => {
+      const entry = history[k];
+      let seconds = entry.frenchTimerAccumulated || 0;
+      // include live elapsed time for today if the timer is currently running
+      if(k === TODAY && entry.frenchTimerRunning && entry.frenchTimerStartedAt){
+        seconds += (Date.now() - entry.frenchTimerStartedAt) / 1000;
+      }
+      return { date: new Date(k+'T00:00:00'), seconds };
+    })
+    .filter(p => p.seconds > 0);
+
+  const chartArea = document.getElementById('frenchChartArea');
+
+  if(points.length === 0){
+    chartArea.innerHTML = '<div class="chart-empty">No French timer sessions logged in this range yet. Start the timer on the Timing tab to begin tracking.</div>';
+    document.getElementById('frenchTotal').textContent = '—';
+    document.getElementById('frenchAvg').textContent = '—';
+    document.getElementById('frenchDaysLogged').textContent = '0';
+    return;
+  }
+
+  const totalSeconds = points.reduce((sum,p)=>sum+p.seconds, 0);
+  const avgSeconds = totalSeconds / points.length;
+
+  document.getElementById('frenchTotal').textContent = fmtHoursMin(totalSeconds);
+  document.getElementById('frenchAvg').textContent = fmtHoursMin(avgSeconds);
+  document.getElementById('frenchDaysLogged').textContent = points.length;
+
+  // --- bar chart ---
+  const W = 600, H = 220, padL = 42, padR = 14, padT = 16, padB = 26;
+  const maxSeconds = Math.max(...points.map(p=>p.seconds));
+  const barW = Math.max((W - padL - padR) / points.length - 4, 3);
+
+  const yFor = (s) => padT + (1 - s/maxSeconds) * (H - padT - padB);
+
+  const bars = points.map((p,i)=>{
+    const x = padL + i * ((W - padL - padR) / points.length);
+    const y = yFor(p.seconds);
+    const h = (H - padB) - y;
+    return `<rect x="${x}" y="${y}" width="${barW}" height="${h}" rx="2" fill="#C9A15A" opacity="0.9" />`;
+  }).join('');
+
+  const gridLines = [0,0.5,1].map(t=>{
+    const y = padT + t*(H-padT-padB);
+    const val = fmtHoursMin(maxSeconds - t*maxSeconds);
+    return `<line x1="${padL}" y1="${y}" x2="${W-padR}" y2="${y}" stroke="#262C36" stroke-width="1"/>
+            <text x="4" y="${y+4}" fill="#8A8F99" font-size="9" font-family="JetBrains Mono, monospace">${val}</text>`;
+  }).join('');
+
+  const firstLabel = points[0].date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const lastLabel = points[points.length-1].date.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+
+  chartArea.innerHTML = `
+    <svg viewBox="0 0 ${W} ${H}" style="width:100%; height:auto;">
+      ${gridLines}
+      ${bars}
+      <text x="${padL}" y="${H-6}" fill="#8A8F99" font-size="10" font-family="JetBrains Mono, monospace">${firstLabel}</text>
+      <text x="${W-padR}" y="${H-6}" fill="#8A8F99" font-size="10" font-family="JetBrains Mono, monospace" text-anchor="end">${lastLabel}</text>
+    </svg>
+  `;
+}
 </script>
 </body>
 </html>
