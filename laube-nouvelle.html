@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="L'Aube">
+<meta name="theme-color" content="#0B0E13">
+<title>L'Aube Nouvelle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E13;
+    --bg-elev:#12161D;
+    --bg-card:#171C24;
+    --border:#262C36;
+    --text:#EDEAE3;
+    --text-dim:#8A8F99;
+    --text-faint:#565C68;
+    --gold:#C9A15A;
+    --rust:#B8541F;
+    --green:#5B8A6B;
+    --red:#A13F3F;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    min-height:100vh;
+    padding-bottom:48px;
+  }
+  .wrap{max-width:640px; margin:0 auto; padding:0 18px;}
+
+  /* HEADER */
+  header{padding:28px 18px 0;}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  h1{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:44px;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+    margin:2px 0 4px;
+    line-height:0.95;
+  }
+  .subline{
+    font-size:13px;
+    color:var(--text-dim);
+    margin-bottom:16px;
+  }
+  .dawn-bar{
+    height:3px;
+    width:100%;
+    background:var(--border);
+    border-radius:2px;
+    overflow:hidden;
+    margin-bottom:22px;
+    position:relative;
+  }
+  .dawn-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg,#2A3040,var(--rust),var(--gold));
+    border-radius:2px;
+    transition:width .4s ease;
+  }
+
+  .wrap > .dawn-bar{margin-left:18px; width:calc(100% - 36px);}
+
+  /* SECTIONS */
+  .section-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin:26px 0 10px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .section-label::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--border);
+  }
+
+  /* DAILY FOUR */
+  .task{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .task:active{transform:scale(0.995);}
+  .task.done{
+    border-color:rgba(91,138,107,0.5);
+    background:linear-gradient(180deg, rgba(91,138,107,0.08), rgba(23,28,36,1) 60%);
+  }
+  .check{
+    width:22px; height:22px; min-width:22px;
+    border-radius:6px;
+    border:2px solid var(--text-faint);
+    margin-top:2px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:13px;
+    transition:all .15s ease;
+  }
+  .task.done .check{
+    background:var(--green);
+    border-color:var(--green);
+    color:#0B0E13;
+  }
+  .task-body{flex:1;}
+  .task-title{
+    font-weight:600;
+    font-size:15px;
+    margin-bottom:2px;
+  }
+  .task-desc{
+    font-size:12.5px;
+    color:var(--text-dim);
+    line-height:1.4;
+  }
+  .task-input{
+    margin-top:8px;
+    width:100%;
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    border-radius:6px;
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    padding:8px 10px;
+    outline:none;
+  }
+  .task-input:focus{border-color:var(--gold);}
+  .task-input::placeholder{color:var(--text-faint);}
+
+  /* STREAK */
+  .streak-row{
+    display:flex; gap:10px; margin-bottom:4px;
+  }
+  .stat{
+    flex:1;
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:14px;
+    text-align:center;
+  }
+  .stat-num{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+    font-size:26px;
+    color:var(--gold);
+  }
+  .stat-label{
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    margin-top:2px;
+  }
+
+  /* LOG CARDS - sleep / alcohol */
+  .log-card{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:10px;
+  }
+  .log-title{
+    font-weight:600;
+    font-size:15px;
+    margin-bottom:12px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .log-row{display:flex; align-items:center; gap:12px;}
+  .num-input{
+    width:70px;
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    border-radius:6px;
+    color:var(--text);
+    font-family:'JetBrains Mono',monospace;
+    font-size:16px;
+    padding:8px 10px;
+    text-align:center;
+    outline:none;
+  }
+  .num-input:focus{border-color:var(--gold);}
+  .unit{font-size:12.5px; color:var(--text-dim);}
+  .toggle-pair{display:flex; gap:8px; margin-left:auto;}
+  .pill{
+    padding:7px 14px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    font-size:12.5px;
+    font-weight:500;
+    background:var(--bg-elev);
+    color:var(--text-dim);
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .pill.active-yes{background:rgba(184,84,31,0.18); border-color:var(--rust); color:#E8A77A;}
+  .pill.active-no{background:rgba(91,138,107,0.18); border-color:var(--green); color:#9ACBAA;}
+  .note-input{
+    width:100%;
+    margin-top:10px;
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    border-radius:6px;
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    padding:8px 10px;
+    outline:none;
+  }
+  .note-input:focus{border-color:var(--gold);}
+
+  /* WEEK VIEW */
+  .week-grid{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:6px;
+    margin-bottom:16px;
+  }
+  .day-col{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:8px 4px;
+    text-align:center;
+  }
+  .day-col.today{border-color:var(--gold);}
+  .day-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px;
+    color:var(--text-faint);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .day-dot{
+    width:8px; height:8px;
+    border-radius:50%;
+    margin:2px auto;
+    background:var(--border);
+  }
+  .day-dot.full{background:var(--green);}
+  .day-dot.partial{background:var(--gold);}
+  .day-sleep{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-dim);
+    margin-top:4px;
+  }
+
+  .weekly-summary{
+    background:var(--bg-card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px;
+    margin-bottom:20px;
+  }
+  .ws-row{
+    display:flex; justify-content:space-between;
+    padding:7px 0;
+    border-bottom:1px solid var(--border);
+    font-size:13.5px;
+  }
+  .ws-row:last-child{border-bottom:none;}
+  .ws-val{
+    font-family:'JetBrains Mono',monospace;
+    color:var(--gold);
+    font-weight:500;
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 18px 10px;
+    font-size:12px;
+    color:var(--text-faint);
+    font-style:italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow"><span>OPERATION</span><span id="todayDate">—</span></div>
+    <h1>L'Aube Nouvelle</h1>
+    <div class="subline" id="dayCounter">Day — of 100</div>
+  </header>
+  <div class="dawn-bar"><div class="dawn-bar-fill" id="dawnFill" style="width:0%"></div></div>
+
+  <div class="wrap">
+    <div class="streak-row">
+      <div class="stat"><div class="stat-num" id="streakNum">0</div><div class="stat-label">Day Streak</div></div>
+      <div class="stat"><div class="stat-num" id="weekRate">0%</div><div class="stat-label">7-Day Rate</div></div>
+      <div class="stat"><div class="stat-num" id="phoneFreeStat">0/7</div><div class="stat-label">Phone-Free Nights</div></div>
+    </div>
+
+    <div class="section-label">The Daily Four</div>
+
+    <div class="task" id="task-move" data-key="move">
+      <div class="check">✓</div>
+      <div class="task-body">
+        <div class="task-title">Move</div>
+        <div class="task-desc">Gym session or 20-minute walk minimum. No zero days.</div>
+      </div>
+    </div>
+
+    <div class="task" id="task-french" data-key="french">
+      <div class="check">✓</div>
+      <div class="task-body">
+        <div class="task-title">French</div>
+        <div class="task-desc">Babbel 15min + Duolingo 10min minimum.</div>
+      </div>
+    </div>
+
+    <div class="task" id="task-forward" data-key="forwardAction">
+      <div class="check">✓</div>
+      <div class="task-body">
+        <div class="task-title">One Forward Action</div>
+        <div class="task-desc">Specific, named, executed same day.</div>
+        <input class="task-input" id="forwardActionText" placeholder="Name today's action..." onclick="event.stopPropagation()">
+      </div>
+    </div>
+
+    <div class="task" id="task-spend" data-key="spendIntentional">
+      <div class="check">✓</div>
+      <div class="task-body">
+        <div class="task-title">Spend Intentionally</div>
+        <div class="task-desc">"Does this serve the mission?" — before every purchase.</div>
+      </div>
+    </div>
+
+    <div class="section-label">Sleep &amp; Alcohol</div>
+
+    <div class="log-card">
+      <div class="log-title">Phone / AirPods at Night
+        <div class="toggle-pair">
+          <div class="pill" id="phoneYes" onclick="setPhoneSleep(true)">Used it</div>
+          <div class="pill" id="phoneNo" onclick="setPhoneSleep(false)">Went without</div>
+        </div>
+      </div>
+      <div class="task-desc" style="margin-bottom:2px;">Did you fall asleep with your phone or AirPods last night?</div>
+    </div>
+
+    <div class="log-card">
+      <div class="log-title">Alcohol
+        <div class="toggle-pair">
+          <div class="pill" id="alcYes" onclick="setAlcohol(true)">Yes</div>
+          <div class="pill" id="alcNo" onclick="setAlcohol(false)">No</div>
+        </div>
+      </div>
+      <input class="note-input" id="alcNote" placeholder="What / how much (optional)" style="display:none;">
+    </div>
+
+    <div class="section-label">Last 7 Days</div>
+    <div class="week-grid" id="weekGrid"></div>
+
+    <div class="section-label">Weekly Compiled</div>
+    <div class="weekly-summary" id="weeklySummary"></div>
+  </div>
+
+  <footer>Il n'y a jamais de moment parfait. Il y a seulement maintenant.</footer>
+</div>
+
+<script>
+const START_DATE = new Date('2026-07-22T00:00:00');
+const STORE_KEY = 'aube_history_v1';
+
+function dateStr(d){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function todayStr(){ return dateStr(new Date()); }
+
+function loadHistory(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  }catch(e){ return {}; }
+}
+function saveHistory(h){
+  localStorage.setItem(STORE_KEY, JSON.stringify(h));
+}
+
+let history = loadHistory();
+const TODAY = todayStr();
+if(!history[TODAY]){
+  history[TODAY] = {
+    move:false, french:false, forwardAction:false, forwardActionText:'',
+    spendIntentional:false,
+    phoneSleep:null,
+    alcohol:null, alcoholNote:''
+  };
+  saveHistory(history);
+}
+let today = history[TODAY];
+
+function persist(){
+  history[TODAY] = today;
+  saveHistory(history);
+  render();
+}
+
+// --- Header ---
+function renderHeader(){
+  const now = new Date();
+  document.getElementById('todayDate').textContent = now.toLocaleDateString('en-US',{weekday:'short', month:'short', day:'numeric'});
+  const dayNum = Math.floor((now - START_DATE) / 86400000) + 1;
+  document.getElementById('dayCounter').textContent = `Day ${dayNum} of 100`;
+
+  const keys = ['move','french','forwardAction','spendIntentional'];
+  const done = keys.filter(k => today[k]).length;
+  document.getElementById('dawnFill').style.width = `${(done/4)*100}%`;
+}
+
+// --- Task toggles ---
+document.querySelectorAll('.task').forEach(el=>{
+  el.addEventListener('click', ()=>{
+    const key = el.dataset.key;
+    today[key] = !today[key];
+    persist();
+  });
+});
+document.getElementById('forwardActionText').addEventListener('input', (e)=>{
+  today.forwardActionText = e.target.value;
+  history[TODAY] = today;
+  saveHistory(history);
+});
+document.getElementById('alcNote').addEventListener('input', (e)=>{
+  today.alcoholNote = e.target.value;
+  history[TODAY] = today;
+  saveHistory(history);
+});
+function setAlcohol(val){
+  today.alcohol = val;
+  persist();
+}
+function setPhoneSleep(val){
+  today.phoneSleep = val;
+  persist();
+}
+
+// --- Streak calc ---
+function calcStreak(){
+  let streak = 0;
+  let d = new Date();
+  while(true){
+    const key = dateStr(d);
+    const entry = history[key];
+    if(!entry) break;
+    const complete = entry.move && entry.french && entry.forwardAction && entry.spendIntentional;
+    if(!complete) break;
+    streak++;
+    d.setDate(d.getDate()-1);
+  }
+  return streak;
+}
+
+function last7Dates(){
+  const arr = [];
+  for(let i=6;i>=0;i--){
+    const d = new Date();
+    d.setDate(d.getDate()-i);
+    arr.push(d);
+  }
+  return arr;
+}
+
+// --- Render everything ---
+function render(){
+  renderHeader();
+
+  // task states
+  ['move','french','forwardAction','spendIntentional'].forEach(k=>{
+    const el = document.getElementById('task-'+(k==='forwardAction'?'forward':(k==='spendIntentional'?'spend':k)));
+    el.classList.toggle('done', !!today[k]);
+  });
+  document.getElementById('forwardActionText').value = today.forwardActionText || '';
+  document.getElementById('alcNote').style.display = today.alcohol === true ? 'block' : 'none';
+  document.getElementById('alcNote').value = today.alcoholNote || '';
+  document.getElementById('alcYes').classList.toggle('active-yes', today.alcohol === true);
+  document.getElementById('alcNo').classList.toggle('active-no', today.alcohol === false);
+  document.getElementById('phoneYes').classList.toggle('active-yes', today.phoneSleep === true);
+  document.getElementById('phoneNo').classList.toggle('active-no', today.phoneSleep === false);
+
+  // streak
+  document.getElementById('streakNum').textContent = calcStreak();
+
+  // week grid + summary
+  const days = last7Dates();
+  let fullCount = 0, phoneFreeDays = 0, phoneDaysLogged = 0, alcDays = 0, moveDays=0, frenchDays=0;
+  const grid = document.getElementById('weekGrid');
+  grid.innerHTML = '';
+  days.forEach(d=>{
+    const key = dateStr(d);
+    const entry = history[key] || {};
+    const doneCount = ['move','french','forwardAction','spendIntentional'].filter(k=>entry[k]).length;
+    if(doneCount===4) fullCount++;
+    if(entry.move) moveDays++;
+    if(entry.french) frenchDays++;
+    if(entry.phoneSleep === false){ phoneFreeDays++; phoneDaysLogged++; }
+    else if(entry.phoneSleep === true){ phoneDaysLogged++; }
+    if(entry.alcohol === true) alcDays++;
+
+    const isToday = key === TODAY;
+    const col = document.createElement('div');
+    col.className = 'day-col' + (isToday ? ' today' : '');
+    const dotClass = doneCount===4 ? 'full' : (doneCount>0 ? 'partial' : '');
+    const phoneMark = entry.phoneSleep === true ? '📱' : (entry.phoneSleep === false ? '📵' : '—');
+    col.innerHTML = `
+      <div class="day-label">${d.toLocaleDateString('en-US',{weekday:'narrow'})}</div>
+      <div class="day-dot ${dotClass}"></div>
+      <div class="day-sleep">${phoneMark}</div>
+    `;
+    grid.appendChild(col);
+  });
+
+  document.getElementById('phoneFreeStat').textContent = `${phoneFreeDays}/${phoneDaysLogged||7}`;
+  document.getElementById('weekRate').textContent = Math.round((fullCount/7)*100) + '%';
+
+  document.getElementById('weeklySummary').innerHTML = `
+    <div class="ws-row"><span>Daily Four complete</span><span class="ws-val">${fullCount}/7</span></div>
+    <div class="ws-row"><span>Move days</span><span class="ws-val">${moveDays}/7</span></div>
+    <div class="ws-row"><span>French days</span><span class="ws-val">${frenchDays}/7</span></div>
+    <div class="ws-row"><span>Phone-free nights</span><span class="ws-val">${phoneFreeDays}/${phoneDaysLogged||7}</span></div>
+    <div class="ws-row"><span>Alcohol days</span><span class="ws-val">${alcDays}/7</span></div>
+  `;
+}
+
+render();
+</script>
+</body>
+</html>
