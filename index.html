@@ -38,7 +38,7 @@
   .wrap{max-width:640px; margin:0 auto; padding:0 18px;}
 
   /* HEADER */
-  header{padding:28px 18px 0;}
+  header{padding:56px 18px 0;}
   .eyebrow{
     font-family:'JetBrains Mono',monospace;
     font-size:11px;
@@ -158,6 +158,7 @@
   .task-input::placeholder{color:var(--text-faint);}
 
   #task-french{cursor:default;}
+  #task-queue{cursor:default;}
   .sub-checks{
     display:flex;
     gap:16px;
@@ -187,7 +188,7 @@
 
   /* STREAK */
   .streak-row{
-    display:flex; gap:10px; margin-bottom:4px;
+    display:flex; gap:10px; margin-bottom:18px;
   }
   .stat{
     flex:1;
@@ -441,6 +442,9 @@
     text-align:center;
     margin-bottom:16px;
   }
+  .timer-card .timer-btn{
+    width:100%;
+  }
   .timer-display{
     font-family:'JetBrains Mono',monospace;
     font-weight:700;
@@ -521,6 +525,89 @@
     outline:none;
   }
   .balance-input:focus{border-color:var(--gold);}
+
+  /* BRZ purchase conditions — visible line-fill progress bars */
+  .condition-row{ margin-bottom:16px; }
+  .condition-row:last-child{ margin-bottom:0; }
+  .condition-label{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:12.5px;
+    color:var(--text-dim);
+    margin-bottom:6px;
+  }
+  .condition-label span:last-child{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--text-faint);
+  }
+  .condition-bar{
+    height:9px;
+    background:var(--bg-elev);
+    border:1px solid var(--border);
+    border-radius:5px;
+    overflow:hidden;
+  }
+  .condition-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg, var(--neon-purple), #E86BFF);
+    border-radius:5px 0 0 5px;
+    transition:width .4s ease;
+  }
+  .condition-fill.complete{
+    background:linear-gradient(90deg, #5B8A6B, #7FC98C);
+  }
+
+  /* BRZ branding — Sapphire Blue Pearl accent + six-star cluster mark, inspired by the target car */
+  .brz-card{
+    border-color:#2B5C9E;
+    box-shadow:0 0 0 1px rgba(59,122,204,0.25), 0 0 24px rgba(59,122,204,0.12);
+    position:relative;
+    overflow:hidden;
+  }
+  .brz-card::before{
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:3px;
+    background:linear-gradient(90deg, #1E4E8C, #4A8FE0, #1E4E8C);
+  }
+  .brz-badge-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:10px;
+  }
+  .brz-stars{
+    width:56px;
+    height:28px;
+  }
+  .brz-wordmark{
+    font-family:'Barlow Condensed',sans-serif;
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:0.06em;
+    color:#7FB4F0;
+    text-transform:uppercase;
+  }
+  .brz-wordmark span{
+    color:#4A8FE0;
+    font-size:13px;
+    margin-left:3px;
+    vertical-align:super;
+    letter-spacing:0.02em;
+  }
+  .brz-count{
+    color:#7FB4F0 !important;
+  }
+  .brz-fill{
+    background:linear-gradient(90deg, #1E4E8C, #4A8FE0);
+  }
+  .brz-fill.complete{
+    background:linear-gradient(90deg, #5B8A6B, #7FC98C);
+  }
   .net-worth-hero{
     text-align:center;
     padding:20px 16px;
@@ -763,14 +850,118 @@
     line-height:1.4;
     margin-bottom:10px;
   }
+
+  /* ===== ADHD-FOCUS ADDITIONS ===== */
+
+  /* completion celebration */
+  @keyframes taskPulse{
+    0%{ transform:scale(1); }
+    35%{ transform:scale(1.025); box-shadow:0 0 0 8px rgba(176,38,255,0.22), 0 0 20px rgba(176,38,255,0.55); }
+    100%{ transform:scale(1); }
+  }
+  @keyframes checkPop{
+    0%{ transform:scale(0.55); }
+    55%{ transform:scale(1.25); }
+    100%{ transform:scale(1); }
+  }
+  .task.just-completed, .log-card.just-completed{ animation:taskPulse .5s ease; }
+  .task.done .check, .sub-check.done .sub-check-box{ animation:checkPop .28s ease; }
+
+  /* next-up highlight — always shows the one thing to do next */
+  .task.next-up{
+    border-color:var(--gold);
+    box-shadow:0 0 0 1px rgba(201,161,90,0.35);
+  }
+
+  /* French partial progress fill (1/3, 2/3 done) */
+  .check.partial-1{ background:linear-gradient(90deg, var(--neon-purple) 33%, transparent 33%); border-color:var(--neon-purple); opacity:0.65; }
+  .check.partial-2{ background:linear-gradient(90deg, var(--neon-purple) 66%, transparent 66%); border-color:var(--neon-purple); opacity:0.85; }
+  .progress-badge{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    color:var(--gold);
+    margin-left:6px;
+  }
+
+  /* priority nudge banner for One Forward Action */
+  .priority-nudge{
+    display:flex; align-items:center; gap:8px;
+    background:rgba(201,161,90,0.12);
+    border:1px solid var(--gold);
+    border-radius:10px;
+    padding:11px 14px;
+    font-size:12.5px;
+    color:#E8CB8E;
+    margin-bottom:12px;
+  }
+
+  /* compact yesterday log — one card, three rows instead of three cards */
+  .quick-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid var(--border);
+  }
+  .quick-row:last-of-type{ border-bottom:none; }
+  .quick-row-label{ font-size:13px; color:var(--text-dim); }
+
+  /* collapsible "More" section — keeps Today view to one focused screen */
+  details.more-section{ margin-top:26px; }
+  details.more-section > summary{
+    list-style:none;
+    cursor:pointer;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--text-faint);
+    display:flex; align-items:center; gap:8px;
+    padding:10px 0;
+  }
+  details.more-section > summary::-webkit-details-marker{ display:none; }
+  details.more-section > summary::before{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--border);
+    order:2;
+  }
+  details.more-section > summary::after{
+    content:'+ show';
+    font-size:10.5px;
+    color:var(--text-dim);
+    order:3;
+  }
+  details.more-section[open] > summary::after{ content:'– hide'; }
+  details.more-section > summary > span{ order:1; }
+
+  /* persistent mini timer bar — visible on every tab so a running timer is never invisible */
+  .mini-timer-bar{
+    display:flex; align-items:center; gap:9px;
+    background:rgba(176,38,255,0.12);
+    border:1px solid var(--neon-purple);
+    border-radius:8px;
+    padding:9px 13px;
+    margin-bottom:14px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;
+    color:#E9C9FF;
+  }
+  .mini-timer-dot{
+    width:7px; height:7px; min-width:7px; border-radius:50%;
+    background:var(--neon-purple);
+    box-shadow:0 0 8px rgba(176,38,255,0.8);
+    animation:dotPulse 1.2s ease-in-out infinite;
+  }
+  @keyframes dotPulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.3; } }
 </style>
 </head>
 <body>
 
 <div class="wrap">
   <header>
-    <div class="eyebrow"><span>OPERATION</span><span id="todayDate">—</span></div>
-    <div class="eyebrow" id="liveClock" style="justify-content:flex-end; margin-top:2px;">—</div>
+    <div class="eyebrow"><span id="todayDate">—</span></div>
+    <div class="eyebrow" id="liveClock" style="justify-content:flex-start; margin-top:2px;">—</div>
     <h1>L'Aube Nouvelle</h1>
     <div class="subline" id="dayCounter">Day — of 100</div>
   </header>
@@ -780,8 +971,16 @@
     <div class="tabs">
       <button class="tab-btn active" id="tabToday" onclick="switchTab('today')">Today</button>
       <button class="tab-btn" id="tabDashboard" onclick="switchTab('dashboard')">Dashboard</button>
-      <button class="tab-btn" id="tabTiming" onclick="switchTab('timing')">Timing</button>
+      <button class="tab-btn" id="tabFinance" onclick="switchTab('finance')">Finance</button>
       <button class="tab-btn" id="tabFitness" onclick="switchTab('fitness')">Fitness</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="mini-timer-bar" id="miniTimerBar" style="display:none;">
+      <span class="mini-timer-dot"></span>
+      <span id="miniTimerLabel"></span>
+      <span id="miniTimerValue"></span>
     </div>
   </div>
 
@@ -792,7 +991,11 @@
       <div class="stat"><div class="stat-num" id="phoneFreeStat">0/7</div><div class="stat-label">Phone-Free Nights</div></div>
     </div>
 
-    <div class="section-label">The Daily Three</div>
+    <div class="priority-nudge" id="forwardActionNudge" style="display:none;">
+      ⚡ Name tonight's one forward action first. Everything below can wait.
+    </div>
+
+    <div class="section-label">The Daily Four</div>
 
     <div class="task" id="task-move" data-key="move">
       <div class="check"></div>
@@ -805,8 +1008,7 @@
     <div class="task" id="task-french">
       <div class="check"></div>
       <div class="task-body">
-        <div class="task-title">French</div>
-        <div class="task-desc">Babbel + Duolingo + one other action. Fills automatically once all three are checked — this box can't be selected directly.</div>
+        <div class="task-title">French <span class="progress-badge" id="frenchProgressBadge"></span></div>
         <div class="sub-checks">
           <div class="sub-check" id="sub-babbel" onclick="toggleFrenchSub(event,'frenchBabbel')">
             <div class="sub-check-box"></div>
@@ -828,61 +1030,85 @@
     <div class="task" id="task-forward" data-key="forwardAction">
       <div class="check"></div>
       <div class="task-body">
-        <div class="task-title">One Forward Action</div>
+        <div class="task-title">One Forward Action <span class="progress-badge" id="forwardPrefilledBadge" style="display:none;">📥 queued last night</span></div>
         <div class="task-desc">Specific, named, executed same day.</div>
         <input class="task-input" id="forwardActionText" placeholder="Name today's action..." onclick="event.stopPropagation()">
       </div>
     </div>
 
-    <div class="section-label">Daily Logs</div>
-
-    <div class="log-card">
-      <div class="log-title">Phone / AirPods at Night
-        <div class="toggle-pair">
-          <div class="pill" id="phoneYes" onclick="setPhoneSleep(true)">Used it</div>
-          <div class="pill" id="phoneNo" onclick="setPhoneSleep(false)">Went without</div>
-        </div>
+    <div class="task" id="task-queue">
+      <div class="check"></div>
+      <div class="task-body">
+        <div class="task-title">Queue Tomorrow's Action</div>
+        <div class="task-desc">Name it now</div>
+        <input class="task-input" id="nextActionInput" placeholder="Tomorrow's one forward action..." onclick="event.stopPropagation()">
+        <div class="task-desc" id="nextActionConfirm" style="margin-top:8px;"></div>
       </div>
-      <div class="task-desc" style="margin-bottom:2px;">Did you fall asleep with your phone or AirPods last night?</div>
     </div>
 
-    <div class="log-card">
-      <div class="log-title">Alcohol
-        <div class="toggle-pair">
-          <div class="pill" id="alcYes" onclick="setAlcohol(true)">Yes</div>
-          <div class="pill" id="alcNo" onclick="setAlcohol(false)">No</div>
-        </div>
-      </div>
-      <input class="note-input" id="alcNote" placeholder="What / how much (optional)" style="display:none;">
-    </div>
-
-    <div class="log-card">
-      <div class="log-title">Spend Check
-        <div class="toggle-pair">
-          <div class="pill" id="spendUnder" onclick="setSpendCheck(true)">Under $30</div>
-          <div class="pill" id="spendOver" onclick="setSpendCheck(false)">Over $30</div>
-        </div>
-      </div>
-      <div class="task-desc" style="margin-bottom:2px;">Did today's discretionary spending stay under $30?</div>
-    </div>
+    <div class="section-label">Weight</div>
 
     <div class="log-card" id="weightCard">
       <div class="log-title">Morning Weight</div>
       <div class="log-row">
-        <input type="number" class="num-input" id="weightInput" min="0" max="500" step="0.1" placeholder="0.0">
+        <input type="text" inputmode="decimal" pattern="[0-9]*" class="num-input" id="weightInput" placeholder="0.0">
         <span class="unit">lbs</span>
         <span class="unit" id="weightKg"></span>
       </div>
       <div class="task-desc" id="weightLoggedTime" style="margin-top:8px;"></div>
     </div>
 
-    <div class="section-label">Last 7 Days</div>
-    <div class="week-grid" id="weekGrid"></div>
+    <div class="section-label">Yesterday's Log</div>
+    <div class="task-desc" id="yesterdayLogSubtitle" style="margin-bottom:12px;"></div>
 
-    <div class="section-label">Weekly Compiled</div>
-    <div class="weekly-summary" id="weeklySummary"></div>
+    <div class="log-card" id="yesterdayLogCard">
+      <div class="quick-row">
+        <span class="quick-row-label">Phone / AirPods at night</span>
+        <div class="toggle-pair">
+          <div class="pill" id="phoneYes" onclick="setPhoneSleep(true)">Used it</div>
+          <div class="pill" id="phoneNo" onclick="setPhoneSleep(false)">Went without</div>
+        </div>
+      </div>
+      <div class="quick-row">
+        <span class="quick-row-label">Alcohol</span>
+        <div class="toggle-pair">
+          <div class="pill" id="alcYes" onclick="setAlcohol(true)">Yes</div>
+          <div class="pill" id="alcNo" onclick="setAlcohol(false)">No</div>
+        </div>
+      </div>
+      <input class="note-input" id="alcNote" placeholder="What / how much (optional)" style="display:none;">
+      <div class="quick-row">
+        <span class="quick-row-label">Spend under $30</span>
+        <div class="toggle-pair">
+          <div class="pill" id="spendUnder" onclick="setSpendCheck(true)">Under</div>
+          <div class="pill" id="spendOver" onclick="setSpendCheck(false)">Over</div>
+        </div>
+      </div>
+    </div>
 
-    <button class="timer-btn" id="copyReportBtn" style="width:100%; margin-bottom:20px;" onclick="copyWeeklyReport()">Copy Weekly Report</button>
+    <details class="more-section" id="moreSection">
+      <summary><span>More — Timers &amp; History</span></summary>
+
+      <div class="section-label">French Timer</div>
+      <div class="timer-card" id="frenchTimerCard">
+        <div class="timer-display" id="frenchTimerDisplay">00:00:00</div>
+        <button class="timer-btn" id="frenchTimerBtn" onclick="toggleFrenchTimer()">Start</button>
+      </div>
+
+      <div class="section-label">Gaming Timer</div>
+      <div class="timer-card" id="gamingTimerCard">
+        <div class="timer-display" id="gamingDisplay">00:00:00</div>
+        <button class="timer-btn" id="gamingBtn" onclick="toggleGamingTimer()">Start</button>
+      </div>
+
+      <div class="section-label">Last 7 Days</div>
+      <div class="week-grid" id="weekGrid"></div>
+
+      <div class="section-label">Weekly Compiled</div>
+      <div class="weekly-summary" id="weeklySummary"></div>
+
+      <button class="timer-btn" id="copyReportBtn" style="width:100%; margin-bottom:20px;" onclick="copyWeeklyReport()">Copy Weekly Report</button>
+    </details>
   </div>
 
   <div class="wrap view" id="viewDashboard">
@@ -955,20 +1181,207 @@
     </div>
   </div>
 
-  <div class="wrap view" id="viewTiming">
-    <div class="section-label">French</div>
+  <div class="wrap view" id="viewFinance">
+    <div class="section-label">BRZ Purchase Conditions</div>
+    <div class="log-card brz-card" id="brzChecklistCard" style="margin-bottom:14px;">
+      <div class="brz-badge-row">
+        <svg class="brz-stars" viewBox="0 0 120 60" aria-hidden="true">
+          <circle cx="30" cy="30" r="5.5" fill="#7FB4F0"/>
+          <circle cx="52" cy="18" r="3.2" fill="#4A8FE0"/>
+          <circle cx="52" cy="42" r="3.2" fill="#4A8FE0"/>
+          <circle cx="72" cy="14" r="2.6" fill="#3B7ACC"/>
+          <circle cx="72" cy="46" r="2.6" fill="#3B7ACC"/>
+          <circle cx="90" cy="30" r="2.6" fill="#3B7ACC"/>
+        </svg>
+        <div class="brz-wordmark">BRZ<span>tS</span></div>
+      </div>
+      <div class="log-title">Conditions Met <span class="progress-badge brz-count" id="brzConditionsCount">0/7</span></div>
 
-    <div class="timer-card" id="frenchTimerCard">
-      <div class="timer-display" id="frenchTimerDisplay">00:00:00</div>
-      <button class="timer-btn" id="frenchTimerBtn" onclick="toggleFrenchTimer()">Start</button>
+      <div class="condition-row">
+        <div class="condition-label"><span>Capital One at $0</span><span id="val-capitalOne">—</span></div>
+        <div class="condition-bar"><div class="condition-fill brz-fill" id="fill-capitalOne"></div></div>
+      </div>
+
+      <div class="condition-row">
+        <div class="condition-label"><span>TD Card at $0</span><span id="val-tdCard">—</span></div>
+        <div class="condition-bar"><div class="condition-fill brz-fill" id="fill-tdCard"></div></div>
+      </div>
+
+      <div class="condition-row">
+        <div class="condition-label"><span>SoFi 1 at $0</span><span id="val-sofi1">—</span></div>
+        <div class="condition-bar"><div class="condition-fill brz-fill" id="fill-sofi1"></div></div>
+      </div>
+
+      <div class="condition-row">
+        <div class="condition-label"><span>SoFi 2 at $0</span><span id="val-sofi2">—</span></div>
+        <div class="condition-bar"><div class="condition-fill brz-fill" id="fill-sofi2"></div></div>
+      </div>
+
+      <div class="condition-row">
+        <div class="condition-label"><span>Student Loans at $0</span><span id="val-studentLoans">—</span></div>
+        <div class="condition-bar"><div class="condition-fill brz-fill" id="fill-studentLoans"></div></div>
+      </div>
+
+      <div class="condition-row">
+        <div class="condition-label"><span>Emergency Fund $2,000+</span><span id="val-emergencySavings">—</span></div>
+        <div class="condition-bar"><div class="condition-fill brz-fill" id="fill-emergencySavings"></div></div>
+      </div>
+
+      <div class="condition-row">
+        <div class="condition-label"><span>$5,000 Down Payment Saved</span><span id="val-brzFund">—</span></div>
+        <div class="condition-bar"><div class="condition-fill brz-fill" id="fill-brzFund"></div></div>
+      </div>
     </div>
 
-    <div class="section-label">Gaming</div>
+    <div class="section-label">Weekly Finance Check-In</div>
+    <div class="task-desc" style="margin-bottom:12px;">Update whatever changed this week. Leave a field blank and it carries forward the last balance you entered.</div>
 
-    <div class="timer-card" id="gamingTimerCard">
-      <div class="timer-display" id="gamingDisplay">00:00:00</div>
-      <button class="timer-btn" id="gamingBtn" onclick="toggleGamingTimer()">Start</button>
+    <div class="log-card" style="margin-bottom:14px;">
+      <div class="log-title">Assets</div>
+      <div class="balance-row">
+        <span class="balance-label">Checking</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="checking" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">Rent Savings</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="rentSavings" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">Emergency Savings</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="emergencySavings" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">Watch Fund (Apple Savings)</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="appleSavings" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">401k (Nextech)</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="nextech401k" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">401k (Vanguard, prior)</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="vanguard401k" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">HSA (Optum)</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="hsa" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">M&amp;T Checking</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="mtChecking" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">BRZ Fund</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="brzFund" placeholder="0"></div>
+      </div>
     </div>
+
+    <div class="log-card" style="margin-bottom:14px;">
+      <div class="log-title">Liabilities</div>
+      <div class="balance-row">
+        <span class="balance-label">SoFi 1 (16.09%)</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="sofi1" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">SoFi 2 (10.60%)</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="sofi2" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">Capital One</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="capitalOne" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">TD Card</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="tdCard" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">Apple Card</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="appleCardBalance" placeholder="0"></div>
+      </div>
+      <div class="balance-row">
+        <span class="balance-label">Student Loans</span>
+        <div class="balance-input-wrap"><span class="unit">$</span><input type="text" inputmode="decimal" class="balance-input" data-field="studentLoans" placeholder="0"></div>
+      </div>
+      <div class="task-desc" style="margin-top:6px; color:#E8A77A;">⚠ Forbearance ends soon — repayment restarts. Keep this balance current so the payoff math stays real.</div>
+    </div>
+
+    <div class="net-worth-hero log-card">
+      <div class="stat-num" id="netWorthCurrent">—</div>
+      <div class="stat-label">Net Worth</div>
+    </div>
+
+    <div class="range-row" id="financeRangeRow">
+      <button class="range-btn" data-range="30">Month</button>
+      <button class="range-btn" data-range="90">3 Months</button>
+      <button class="range-btn" data-range="180">6 Months</button>
+      <button class="range-btn" data-range="365">12 Months</button>
+    </div>
+
+    <div class="section-label">Net Worth Over Time</div>
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="netWorthChange">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="netWorthPerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="netWorthPoints">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+    <div class="chart-card"><div id="netWorthChartArea"></div></div>
+
+    <div class="section-label">Total Debt</div>
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="totalDebtChange">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="totalDebtPerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="totalDebtPoints">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+    <div class="chart-card"><div id="totalDebtChartArea"></div></div>
+
+    <div class="section-label">Student Loans</div>
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="studentLoansChange">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="studentLoansPerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="studentLoansPoints">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+    <div class="chart-card"><div id="studentLoansChartArea"></div></div>
+
+    <div class="section-label">SoFi 1</div>
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="sofi1Change">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="sofi1PerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="sofi1Points">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+    <div class="chart-card"><div id="sofi1ChartArea"></div></div>
+
+    <div class="section-label">SoFi 2</div>
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="sofi2Change">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="sofi2PerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="sofi2Points">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+    <div class="chart-card"><div id="sofi2ChartArea"></div></div>
+
+    <div class="section-label">Apple Card</div>
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="appleCardChange">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="appleCardPerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="appleCardPoints">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+    <div class="chart-card"><div id="appleCardChartArea"></div></div>
+
+    <div class="section-label">Emergency Fund</div>
+    <div class="task-desc" style="margin-bottom:10px;" id="emergencyConditionsNote"></div>
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="emergencyChange">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="emergencyPerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="emergencyPoints">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+    <div class="chart-card"><div id="emergencyChartArea"></div></div>
+
+    <div class="section-label">BRZ Fund</div>
+    <div class="task-desc" style="margin-bottom:10px;" id="brzConditionsNote"></div>
+    <div class="trend-row">
+      <div class="trend-stat"><div class="trend-num" id="brzChange">—</div><div class="trend-label">Total Change</div></div>
+      <div class="trend-stat"><div class="trend-num" id="brzPerWeek">—</div><div class="trend-label">Avg / Week</div></div>
+      <div class="trend-stat"><div class="trend-num" id="brzPoints">—</div><div class="trend-label">Entries Logged</div></div>
+    </div>
+    <div class="chart-card"><div id="brzChartArea"></div></div>
   </div>
 
   <div class="wrap view" id="viewFitness">
@@ -1112,9 +1525,12 @@ function saveHistory(h){
 
 let history = loadHistory();
 const TODAY = todayStr();
-if(!history[TODAY]){
-  history[TODAY] = {
+const YESTERDAY = dateStr(new Date(new Date(TODAY+'T00:00:00').getTime() - 86400000));
+
+function emptyDayEntry(){
+  return {
     move:false, french:false, forwardAction:false, forwardActionText:'',
+    forwardActionPrefilled:false, nextActionText:'',
     frenchBabbel:false, frenchDuo:false, frenchOther:false, frenchOtherText:'',
     phoneSleep:null,
     alcohol:null, alcoholNote:'',
@@ -1122,28 +1538,54 @@ if(!history[TODAY]){
     weight:null, weightLoggedAt:null,
     appleCardBalance:null,
     checking:null, rentSavings:null, emergencySavings:null, appleSavings:null,
-    nextech401k:null, vanguard401k:null, hsa:null, mtChecking:null,
+    nextech401k:null, vanguard401k:null, hsa:null, mtChecking:null, brzFund:null,
     sofi1:null, sofi2:null, capitalOne:null, tdCard:null, studentLoans:null,
     gamingAccumulated:0, gamingRunning:false, gamingStartedAt:null,
     frenchTimerAccumulated:0, frenchTimerRunning:false, frenchTimerStartedAt:null
   };
+}
+
+function backfillDayEntry(entry){
+  const defaults = emptyDayEntry();
+  Object.keys(defaults).forEach(k=>{
+    if(entry[k] === undefined) entry[k] = defaults[k];
+  });
+  return entry;
+}
+
+// The 4th Daily task ("Queue Tomorrow's Action") is derived from content, not a separate
+// stored boolean — same pattern as the French task's sub-checks. This keeps one source of truth.
+function isQueuedDone(entry){
+  return !!(entry && entry.nextActionText && entry.nextActionText.trim().length > 0);
+}
+
+if(!history[TODAY]){
+  const newEntry = emptyDayEntry();
+  // consume whatever was queued last night — the whole point of naming it in advance
+  const prevEntry = history[YESTERDAY];
+  if(prevEntry && prevEntry.nextActionText && prevEntry.nextActionText.trim().length > 0){
+    newEntry.forwardActionText = prevEntry.nextActionText.trim();
+    newEntry.forwardActionPrefilled = true;
+  }
+  history[TODAY] = newEntry;
   saveHistory(history);
 }
-let today = history[TODAY];
-if(today.gamingAccumulated === undefined) today.gamingAccumulated = 0;
-if(today.weightLoggedAt === undefined) today.weightLoggedAt = null;
-if(today.gamingRunning === undefined) today.gamingRunning = false;
-if(today.gamingStartedAt === undefined) today.gamingStartedAt = null;
-if(today.frenchTimerAccumulated === undefined) today.frenchTimerAccumulated = 0;
-if(today.frenchTimerRunning === undefined) today.frenchTimerRunning = false;
-if(today.frenchTimerStartedAt === undefined) today.frenchTimerStartedAt = null;
-if(today.appleCardBalance === undefined) today.appleCardBalance = null;
-['checking','rentSavings','emergencySavings','appleSavings','nextech401k','vanguard401k','hsa','mtChecking','sofi1','sofi2','capitalOne','tdCard','studentLoans'].forEach(f=>{
-  if(today[f] === undefined) today[f] = null;
-});
+let today = backfillDayEntry(history[TODAY]);
+
+if(!history[YESTERDAY]){
+  history[YESTERDAY] = emptyDayEntry();
+  saveHistory(history);
+}
+let yesterday = backfillDayEntry(history[YESTERDAY]);
 
 function persist(){
   history[TODAY] = today;
+  saveHistory(history);
+  render();
+}
+
+function persistYesterday(){
+  history[YESTERDAY] = yesterday;
   saveHistory(history);
   render();
 }
@@ -1241,8 +1683,33 @@ function renderHeader(){
   document.getElementById('dayCounter').textContent = `Day ${dayNum} of 100`;
 
   const keys = ['move','french','forwardAction'];
-  const done = keys.filter(k => today[k]).length;
-  document.getElementById('dawnFill').style.width = `${(done/3)*100}%`;
+  const done = keys.filter(k => today[k]).length + (isQueuedDone(today) ? 1 : 0);
+  document.getElementById('dawnFill').style.width = `${(done/4)*100}%`;
+}
+
+// --- Celebration animation (ADHD-friendly immediate reward on completion) ---
+function celebrate(el){
+  if(!el) return;
+  el.classList.remove('just-completed');
+  void el.offsetWidth; // force reflow so animation restarts if fired twice quickly
+  el.classList.add('just-completed');
+  setTimeout(()=> el.classList.remove('just-completed'), 600);
+}
+
+// --- Highlights the next undone item in the Daily Four so there's always one clear next step ---
+function focusNextTask(){
+  const order = ['task-move','task-french','task-forward','task-queue'];
+  let found = false;
+  order.forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    if(!found && !el.classList.contains('done')){
+      el.classList.add('next-up');
+      found = true;
+    } else {
+      el.classList.remove('next-up');
+    }
+  });
 }
 
 // --- Task toggles ---
@@ -1250,45 +1717,86 @@ document.querySelectorAll('.task').forEach(el=>{
   el.addEventListener('click', ()=>{
     const key = el.dataset.key;
     if(!key) return;
-    today[key] = !today[key];
+    const turningOn = !today[key];
+    today[key] = turningOn;
     persist();
+    if(turningOn) celebrate(el);
   });
 });
 document.getElementById('forwardActionText').addEventListener('input', (e)=>{
   today.forwardActionText = e.target.value;
   history[TODAY] = today;
   saveHistory(history);
+  updateForwardActionNudge();
 });
-document.getElementById('alcNote').addEventListener('input', (e)=>{
-  today.alcoholNote = e.target.value;
+document.getElementById('nextActionInput').addEventListener('input', (e)=>{
+  const hadValue = isQueuedDone(today);
+  today.nextActionText = e.target.value;
   history[TODAY] = today;
+  saveHistory(history);
+  updateQueueTaskState();
+  if(!hadValue && isQueuedDone(today)) celebrate(document.getElementById('task-queue'));
+});
+
+// --- Queue Tomorrow's Action task (4th of the Daily Four) ---
+function updateQueueTaskState(){
+  const input = document.getElementById('nextActionInput');
+  input.value = today.nextActionText || '';
+  const taskEl = document.getElementById('task-queue');
+  const filled = isQueuedDone(today);
+  taskEl.classList.toggle('done', filled);
+  document.getElementById('nextActionConfirm').textContent = filled
+
+    ? 'Locked in — this appears automatically when tomorrow starts.'
+    : '';
+}
+document.getElementById('alcNote').addEventListener('input', (e)=>{
+  yesterday.alcoholNote = e.target.value;
+  history[YESTERDAY] = yesterday;
   saveHistory(history);
 });
 function setAlcohol(val){
-  today.alcohol = val;
-  persist();
+  yesterday.alcohol = val;
+  persistYesterday();
 }
 function setSpendCheck(val){
-  today.spendUnderLimit = val;
-  persist();
+  yesterday.spendUnderLimit = val;
+  persistYesterday();
 }
 function setPhoneSleep(val){
-  today.phoneSleep = val;
-  persist();
+  yesterday.phoneSleep = val;
+  persistYesterday();
 }
 function toggleFrenchSub(e, key){
   e.stopPropagation();
-  today[key] = !today[key];
+  const turningOn = !today[key];
+  const wasComplete = today.french;
+  today[key] = turningOn;
   today.french = today.frenchBabbel && today.frenchDuo && today.frenchOther;
   persist();
+  const subMap = {frenchBabbel:'sub-babbel', frenchDuo:'sub-duo'};
+  if(turningOn && subMap[key]) celebrate(document.getElementById(subMap[key]));
+  if(!wasComplete && today.french) celebrate(document.getElementById('task-french'));
 }
 function refreshFrenchVisuals(){
   document.getElementById('sub-babbel').classList.toggle('done', !!today.frenchBabbel);
   document.getElementById('sub-duo').classList.toggle('done', !!today.frenchDuo);
   document.getElementById('sub-other').classList.toggle('done', !!today.frenchOther);
   document.getElementById('task-french').classList.toggle('done', !!today.french);
+
+  // partial progress: fill the checkbox and show a fraction badge so effort registers before all 3 are done
+  const count = [today.frenchBabbel, today.frenchDuo, today.frenchOther].filter(Boolean).length;
+  const checkEl = document.querySelector('#task-french .check');
+  if(checkEl){
+    checkEl.classList.toggle('partial-1', count===1);
+    checkEl.classList.toggle('partial-2', count===2);
+  }
+  const badge = document.getElementById('frenchProgressBadge');
+  if(badge) badge.textContent = (today.french || count===0) ? '' : `${count}/3`;
 }
 document.getElementById('frenchOtherText').addEventListener('input', (e)=>{
+  const wasOther = today.frenchOther;
+  const wasComplete = today.french;
   today.frenchOtherText = e.target.value;
   today.frenchOther = e.target.value.trim().length > 0;
   today.french = today.frenchBabbel && today.frenchDuo && today.frenchOther;
@@ -1296,11 +1804,28 @@ document.getElementById('frenchOtherText').addEventListener('input', (e)=>{
   saveHistory(history);
   refreshFrenchVisuals();
   renderHeader();
+  if(!wasOther && today.frenchOther) celebrate(document.getElementById('sub-other'));
+  if(!wasComplete && today.french) celebrate(document.getElementById('task-french'));
+});
+// strip anything that isn't a digit or a single decimal point as the person types
+// (type="number" inputs technically accept e/+/- for scientific notation — this closes that gap)
+document.getElementById('weightInput').addEventListener('input', (e)=>{
+  let v = e.target.value.replace(/[^0-9.]/g, '');
+  const firstDot = v.indexOf('.');
+  if(firstDot !== -1){
+    v = v.slice(0, firstDot+1) + v.slice(firstDot+1).replace(/\./g, '');
+  }
+  if(e.target.value !== v) e.target.value = v;
 });
 document.getElementById('weightInput').addEventListener('change', (e)=>{
-  today.weight = e.target.value === '' ? null : parseFloat(e.target.value);
+  const hadWeight = typeof today.weight === 'number';
+  let val = e.target.value === '' ? null : parseFloat(e.target.value);
+  if(val !== null && (isNaN(val) || val < 0 || val > 500)) val = null;
+  today.weight = val;
+  e.target.value = val ?? '';
   today.weightLoggedAt = today.weight === null ? null : Date.now();
   persist();
+  if(!hadWeight && typeof today.weight === 'number') celebrate(document.getElementById('weightCard'));
 });
 
 // --- Streak calc ---
@@ -1311,7 +1836,7 @@ function calcStreak(){
     const key = dateStr(d);
     const entry = history[key];
     if(!entry) break;
-    const complete = entry.move && entry.french && entry.forwardAction;
+    const complete = entry.move && entry.french && entry.forwardAction && isQueuedDone(entry);
     if(!complete) break;
     streak++;
     d.setDate(d.getDate()-1);
@@ -1329,6 +1854,13 @@ function last7Dates(){
   return arr;
 }
 
+// --- Priority nudge: dims lower-priority sections until tonight's forward action is named ---
+function updateForwardActionNudge(){
+  const hasForwardAction = !!(today.forwardActionText && today.forwardActionText.trim().length > 0);
+  const nudge = document.getElementById('forwardActionNudge');
+  if(nudge) nudge.style.display = hasForwardAction ? 'none' : 'flex';
+}
+
 // --- Render everything ---
 function render(){
   renderHeader();
@@ -1340,15 +1872,23 @@ function render(){
   });
   document.getElementById('forwardActionText').value = today.forwardActionText || '';
   document.getElementById('frenchOtherText').value = today.frenchOtherText || '';
+  document.getElementById('forwardPrefilledBadge').style.display = today.forwardActionPrefilled ? 'inline' : 'none';
   refreshFrenchVisuals();
-  document.getElementById('alcNote').style.display = today.alcohol === true ? 'block' : 'none';
-  document.getElementById('alcNote').value = today.alcoholNote || '';
-  document.getElementById('alcYes').classList.toggle('active-yes', today.alcohol === true);
-  document.getElementById('alcNo').classList.toggle('active-no', today.alcohol === false);
-  document.getElementById('spendUnder').classList.toggle('active-no', today.spendUnderLimit === true);
-  document.getElementById('spendOver').classList.toggle('active-yes', today.spendUnderLimit === false);
-  document.getElementById('phoneYes').classList.toggle('active-yes', today.phoneSleep === true);
-  document.getElementById('phoneNo').classList.toggle('active-no', today.phoneSleep === false);
+  updateQueueTaskState();
+  updateForwardActionNudge();
+  focusNextTask();
+
+  const yLabel = new Date(YESTERDAY+'T00:00:00').toLocaleDateString('en-US',{weekday:'long', month:'short', day:'numeric'});
+  document.getElementById('yesterdayLogSubtitle').textContent = `Logging for ${yLabel}`;
+
+  document.getElementById('alcNote').style.display = yesterday.alcohol === true ? 'block' : 'none';
+  document.getElementById('alcNote').value = yesterday.alcoholNote || '';
+  document.getElementById('alcYes').classList.toggle('active-yes', yesterday.alcohol === true);
+  document.getElementById('alcNo').classList.toggle('active-no', yesterday.alcohol === false);
+  document.getElementById('spendUnder').classList.toggle('active-no', yesterday.spendUnderLimit === true);
+  document.getElementById('spendOver').classList.toggle('active-yes', yesterday.spendUnderLimit === false);
+  document.getElementById('phoneYes').classList.toggle('active-yes', yesterday.phoneSleep === true);
+  document.getElementById('phoneNo').classList.toggle('active-no', yesterday.phoneSleep === false);
   document.getElementById('weightInput').value = today.weight ?? '';
   document.getElementById('weightCard').classList.toggle('filled', typeof today.weight === 'number');
   document.getElementById('weightLoggedTime').textContent = today.weightLoggedAt
@@ -1356,7 +1896,7 @@ function render(){
     : '';
   document.querySelectorAll('.balance-input').forEach(inp=>{
     const field = inp.dataset.field;
-    inp.value = today[field] ?? '';
+    inp.value = typeof today[field] === 'number' ? today[field] : (getLatestValue(field, new Date()) ?? '');
   });
   document.getElementById('weightKg').textContent = typeof today.weight === 'number'
     ? `(${(today.weight * 0.453592).toFixed(1)} kg)`
@@ -1373,8 +1913,8 @@ function render(){
   days.forEach(d=>{
     const key = dateStr(d);
     const entry = history[key] || {};
-    const doneCount = ['move','french','forwardAction'].filter(k=>entry[k]).length;
-    if(doneCount===3) fullCount++;
+    const doneCount = ['move','french','forwardAction'].filter(k=>entry[k]).length + (isQueuedDone(entry) ? 1 : 0);
+    if(doneCount===4) fullCount++;
     if(entry.move) moveDays++;
     if(entry.french) frenchDays++;
     if(entry.phoneSleep === false){ phoneFreeDays++; phoneDaysLogged++; }
@@ -1387,12 +1927,14 @@ function render(){
     const col = document.createElement('div');
     col.className = 'day-col' + (isToday ? ' today' : '');
     col.onclick = () => openDayEditor(key);
-    const dotClass = doneCount===3 ? 'full' : (doneCount>0 ? 'partial' : '');
+    const dotClass = doneCount===4 ? 'full' : (doneCount>0 ? 'partial' : '');
     const phoneMark = entry.phoneSleep === true ? '📱' : (entry.phoneSleep === false ? '📵' : '—');
+    const frenchMark = entry.french === true ? '🇫🇷' : '—';
     col.innerHTML = `
       <div class="day-label">${d.toLocaleDateString('en-US',{weekday:'narrow'})}</div>
       <div class="day-dot ${dotClass}"></div>
       <div class="day-sleep">${phoneMark}</div>
+      <div class="day-sleep">${frenchMark}</div>
     `;
     grid.appendChild(col);
   });
@@ -1401,7 +1943,7 @@ function render(){
   document.getElementById('weekRate').textContent = Math.round((fullCount/7)*100) + '%';
 
   document.getElementById('weeklySummary').innerHTML = `
-    <div class="ws-row"><span>Daily Three complete</span><span class="ws-val">${fullCount}/7</span></div>
+    <div class="ws-row"><span>Daily Four complete</span><span class="ws-val">${fullCount}/7</span></div>
     <div class="ws-row"><span>Move days</span><span class="ws-val">${moveDays}/7</span></div>
     <div class="ws-row"><span>French days</span><span class="ws-val">${frenchDays}/7</span></div>
     <div class="ws-row"><span>Phone-free nights</span><span class="ws-val">${phoneFreeDays}/7</span></div>
@@ -1423,13 +1965,14 @@ setInterval(updateLiveClock, 1000);
 function switchTab(tab){
   document.getElementById('viewToday').classList.toggle('active', tab==='today');
   document.getElementById('viewDashboard').classList.toggle('active', tab==='dashboard');
-  document.getElementById('viewTiming').classList.toggle('active', tab==='timing');
+  document.getElementById('viewFinance').classList.toggle('active', tab==='finance');
   document.getElementById('viewFitness').classList.toggle('active', tab==='fitness');
   document.getElementById('tabToday').classList.toggle('active', tab==='today');
   document.getElementById('tabDashboard').classList.toggle('active', tab==='dashboard');
-  document.getElementById('tabTiming').classList.toggle('active', tab==='timing');
+  document.getElementById('tabFinance').classList.toggle('active', tab==='finance');
   document.getElementById('tabFitness').classList.toggle('active', tab==='fitness');
   if(tab==='dashboard'){ renderDashboard(); renderGamingDashboard(); renderFrenchDashboard(); }
+  if(tab==='finance'){ renderFinanceDashboard(); }
   if(tab==='fitness') renderFitnessTab();
 }
 
@@ -1524,7 +2067,7 @@ function renderDashboard(){
 }
 
 // --- FINANCE DASHBOARD ---
-const ASSET_FIELDS = ['checking','rentSavings','emergencySavings','appleSavings','nextech401k','vanguard401k','hsa','mtChecking'];
+const ASSET_FIELDS = ['checking','rentSavings','emergencySavings','appleSavings','nextech401k','vanguard401k','hsa','mtChecking','brzFund'];
 const LIABILITY_FIELDS = ['sofi1','sofi2','capitalOne','tdCard','appleCardBalance','studentLoans'];
 const FINANCE_FIELDS = ASSET_FIELDS.concat(LIABILITY_FIELDS);
 
@@ -1657,10 +2200,23 @@ document.querySelectorAll('#financeRangeRow .range-btn').forEach(btn=>{
 
 // balance input listeners (generic, all 14 accounts)
 document.querySelectorAll('.balance-input').forEach(inp=>{
+  // numeric-only sanitizer, same approach as the weight field — blocks e/+/- and extra decimals
+  inp.addEventListener('input', (e)=>{
+    let v = e.target.value.replace(/[^0-9.]/g, '');
+    const firstDot = v.indexOf('.');
+    if(firstDot !== -1){
+      v = v.slice(0, firstDot+1) + v.slice(firstDot+1).replace(/\./g, '');
+    }
+    if(e.target.value !== v) e.target.value = v;
+  });
   inp.addEventListener('change', (e)=>{
     const field = inp.dataset.field;
-    today[field] = e.target.value === '' ? null : parseFloat(e.target.value);
+    let val = e.target.value === '' ? null : parseFloat(e.target.value);
+    if(val !== null && (isNaN(val) || val < 0)) val = null;
+    today[field] = val;
+    e.target.value = val ?? '';
     persist();
+    renderFinanceDashboard();
   });
 });
 
@@ -1677,10 +2233,86 @@ function renderFinanceDashboard(){
 
   renderFinanceLineChart('netWorthChartArea','netWorthChange','netWorthPerWeek','netWorthPoints', netWorthSeries(cutoff), '#5B8A6B');
   renderFinanceLineChart('totalDebtChartArea','totalDebtChange','totalDebtPerWeek','totalDebtPoints', totalDebtSeries(cutoff), '#B8541F');
+  renderFinanceLineChart('studentLoansChartArea','studentLoansChange','studentLoansPerWeek','studentLoansPoints', singleFieldSeries('studentLoans', cutoff), '#B8541F');
   renderFinanceLineChart('appleCardChartArea','appleCardChange','appleCardPerWeek','appleCardPoints', singleFieldSeries('appleCardBalance', cutoff), '#B8541F');
   renderFinanceLineChart('sofi1ChartArea','sofi1Change','sofi1PerWeek','sofi1Points', singleFieldSeries('sofi1', cutoff), '#A13F3F');
   renderFinanceLineChart('sofi2ChartArea','sofi2Change','sofi2PerWeek','sofi2Points', singleFieldSeries('sofi2', cutoff), '#A13F3F');
+  const emergencyNow = getLatestValue('emergencySavings', todayDate) ?? 0;
+  const EMERGENCY_TARGET = 2000;
+  document.getElementById('emergencyConditionsNote').textContent = emergencyNow > 0
+    ? `${fmtDollar(emergencyNow)} of ${fmtDollar(EMERGENCY_TARGET)} target — ${Math.min(100, Math.round((emergencyNow/EMERGENCY_TARGET)*100))}%`
+    : `Target: ${fmtDollar(EMERGENCY_TARGET)}.`;
   renderFinanceLineChart('emergencyChartArea','emergencyChange','emergencyPerWeek','emergencyPoints', singleFieldSeries('emergencySavings', cutoff), '#5B8A6B');
+
+  const brzNow = getLatestValue('brzFund', todayDate) ?? 0;
+  const BRZ_TARGET = 5000;
+  document.getElementById('brzConditionsNote').textContent = brzNow > 0
+    ? `${fmtDollar(brzNow)} of ${fmtDollar(BRZ_TARGET)} down payment target — ${Math.min(100, Math.round((brzNow/BRZ_TARGET)*100))}%`
+    : `Target: ${fmtDollar(BRZ_TARGET)} down payment before purchase window opens.`;
+  renderFinanceLineChart('brzChartArea','brzChange','brzPerWeek','brzPoints', singleFieldSeries('brzFund', cutoff), '#C9A15A');
+
+  renderBrzChecklist(todayDate);
+}
+
+// --- BRZ Purchase Conditions checklist (visible line-fill progress bars) ---
+// type 'zero' = debt-clear condition, progress measured against the earliest known balance for that field
+// type 'min'  = threshold condition, progress measured against a flat dollar target
+function conditionProgress(field, type, target, asOfDate, knownBaseline){
+  const latest = getLatestValue(field, asOfDate);
+  if(latest === null){
+    return { pct: 0, label: 'No data yet', complete: false };
+  }
+  if(type === 'zero'){
+    let baseline;
+    if(typeof knownBaseline === 'number'){
+      // use the real starting balance instead of "first entry ever logged in the app" —
+      // otherwise progress reads as 0% until a second, lower entry exists
+      baseline = knownBaseline;
+    } else {
+      const allTime = singleFieldSeries(field, new Date(0));
+      baseline = allTime.length > 0 ? allTime[0].value : latest;
+    }
+    let pct;
+    if(baseline <= 0) pct = latest <= 0 ? 1 : 0;
+    else pct = Math.min(1, Math.max(0, (baseline - latest) / baseline));
+    return {
+      pct,
+      label: latest <= 0 ? 'Cleared' : `${fmtDollar(latest)} left`,
+      complete: latest <= 0
+    };
+  }
+  // type === 'min'
+  const pct = Math.min(1, Math.max(0, latest / target));
+  return {
+    pct,
+    label: `${fmtDollar(latest)} of ${fmtDollar(target)}`,
+    complete: latest >= target
+  };
+}
+
+function renderBrzChecklist(asOfDate){
+  const conditions = [
+    { field:'capitalOne', type:'zero', target:0 },
+    { field:'tdCard', type:'zero', target:0 },
+    { field:'sofi1', type:'zero', target:0, baseline:20000 },
+    { field:'sofi2', type:'zero', target:0, baseline:7000 },
+    { field:'studentLoans', type:'zero', target:0, baseline:30000 },
+    { field:'emergencySavings', type:'min', target:2000 },
+    { field:'brzFund', type:'min', target:5000 }
+  ];
+  let metCount = 0;
+  conditions.forEach(c=>{
+    const { pct, label, complete } = conditionProgress(c.field, c.type, c.target, asOfDate, c.baseline);
+    if(complete) metCount++;
+    const fillEl = document.getElementById('fill-'+c.field);
+    const valEl = document.getElementById('val-'+c.field);
+    if(fillEl){
+      fillEl.style.width = `${pct*100}%`;
+      fillEl.classList.toggle('complete', complete);
+    }
+    if(valEl) valEl.textContent = label;
+  });
+  document.getElementById('brzConditionsCount').textContent = `${metCount}/7`;
 }
 
 // --- GAMING TIMER ---
@@ -1704,6 +2336,26 @@ function currentGamingSeconds(){
 
 function updateGamingDisplay(){
   document.getElementById('gamingDisplay').textContent = fmtHMS(currentGamingSeconds());
+  updateMiniTimerBar();
+}
+
+// --- Persistent mini timer bar (visible on every tab, not just Today) ---
+function updateMiniTimerBar(){
+  const bar = document.getElementById('miniTimerBar');
+  const label = document.getElementById('miniTimerLabel');
+  const value = document.getElementById('miniTimerValue');
+  if(!bar) return;
+  if(today.frenchTimerRunning){
+    bar.style.display = 'flex';
+    label.textContent = 'French running —';
+    value.textContent = fmtHMS(currentFrenchTimerSeconds());
+  } else if(today.gamingRunning){
+    bar.style.display = 'flex';
+    label.textContent = 'Gaming running —';
+    value.textContent = fmtHMS(currentGamingSeconds());
+  } else {
+    bar.style.display = 'none';
+  }
 }
 
 function toggleGamingTimer(){
@@ -1753,6 +2405,7 @@ function currentFrenchTimerSeconds(){
 
 function updateFrenchTimerDisplay(){
   document.getElementById('frenchTimerDisplay').textContent = fmtHMS(currentFrenchTimerSeconds());
+  updateMiniTimerBar();
 }
 
 function toggleFrenchTimer(){
@@ -1788,6 +2441,7 @@ updateFrenchTimerDisplay();
 if(today.frenchTimerRunning){
   frenchTimerInterval = setInterval(updateFrenchTimerDisplay, 1000);
 }
+updateMiniTimerBar();
 
 // --- TIMING DASHBOARD ---
 let currentTimingRange = 7;
@@ -1892,7 +2546,7 @@ function copyWeeklyReport(){
   const days = last7Dates();
   const entries = days.map(d => ({ date: d, key: dateStr(d), entry: history[dateStr(d)] || {} }));
 
-  let moveDays=0, frenchDays=0, forwardDays=0, fullCount=0;
+  let moveDays=0, frenchDays=0, forwardDays=0, queueDays=0, fullCount=0;
   let phoneFreeDays=0, phoneLogged=0, alcDays=0, spendUnderDays=0, spendLogged=0;
   let gamingSeconds=0, frenchSeconds=0;
   const weights = [];
@@ -1901,7 +2555,8 @@ function copyWeeklyReport(){
     if(entry.move) moveDays++;
     if(entry.french) frenchDays++;
     if(entry.forwardAction) forwardDays++;
-    if(entry.move && entry.french && entry.forwardAction) fullCount++;
+    if(isQueuedDone(entry)) queueDays++;
+    if(entry.move && entry.french && entry.forwardAction && isQueuedDone(entry)) fullCount++;
     if(entry.phoneSleep === false){ phoneFreeDays++; phoneLogged++; }
     else if(entry.phoneSleep === true){ phoneLogged++; }
     if(entry.alcohol === true) alcDays++;
@@ -1932,11 +2587,12 @@ function copyWeeklyReport(){
 Week of ${startLabel} to ${endLabel}
 Day streak: ${streak}
 
-DAILY THREE
+DAILY FOUR
 Move: ${moveDays}/7
 French: ${frenchDays}/7
 Forward Action: ${forwardDays}/7
-All three complete: ${fullCount}/7
+Queued Tomorrow's Action: ${queueDays}/7
+All four complete: ${fullCount}/7
 
 HABITS
 Phone-free nights: ${phoneFreeDays}/7
